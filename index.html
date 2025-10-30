@@ -3,234 +3,317 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>이력서 | Your Name</title>
-  <meta name="description" content="GitHub Pages에서 바로 실행 가능한 단일 파일 이력서 페이지" />
-  <link rel="icon" href="./images/favicon.png" />
-  <meta name="theme-color" content="#0ea5e9" />
+  <title>Spectral — Restyled Minimal</title>
+  <meta name="description" content="Content preserved, modern/minimal restyle in a single index.html for GitHub Pages." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet" />
   <style>
     :root{
-      --bg:#0b0c10;            /* 배경 기본 */
-      --panel:#0f1217;         /* 카드/패널 */
-      --text:#e5e7eb;          /* 본문 텍스트 */
-      --muted:#a1a1aa;         /* 보조 텍스트 */
-      --line:#1f2937;          /* 라인 */
-      --brand:#0ea5e9;         /* 포인트 컬러 */
-      --radius:16px;
-      --shadow: 0 10px 30px rgba(2,6,23,.28);
-      --maxw: 1000px;
+      --bg: #0b0d12;
+      --bg-accent: #0f1320;
+      --ink: #e7e9ee;
+      --muted: #a1a8b3;
+      --brand: #22d3ee;    /* cyan */
+      --brand-2: #0ea5e9;  /* sky */
+      --good: #00ff80;
+      --line: #1c2431;
+      --radius: 18px;
+      --shadow: 0 16px 60px rgba(3,7,18,.35);
     }
     @media (prefers-color-scheme: light){
-      :root{
-        --bg:#f8fafc; --panel:#ffffff; --text:#0f172a; --muted:#475569; --line:#e5e7eb; --shadow:0 8px 24px rgba(15,23,42,.08);
-      }
+      :root{ --bg:#f6f8fb; --bg-accent:#ffffff; --ink:#0f172a; --muted:#475569; --line:#e5e7eb; --shadow:0 16px 40px rgba(15,23,42,.08); }
     }
+
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{
-      margin:0; background:var(--bg); color:var(--text);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Apple SD Gothic Neo, "Helvetica Neue", Arial, "PingFang SC", "Malgun Gothic", sans-serif;
-      line-height:1.6;
+    body{ margin:0; color:var(--ink); background:
+      radial-gradient(1200px 600px at 10% -10%, rgba(34,211,238,.10), transparent 60%),
+      radial-gradient(1000px 500px at 90% -10%, rgba(0,255,128,.08), transparent 60%),
+      linear-gradient(180deg, var(--bg), var(--bg-accent));
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Apple SD Gothic Neo, "Helvetica Neue", Arial, "PingFang SC", "Malgun Gothic", sans-serif;
+      line-height:1.6; letter-spacing:-0.015em; overflow:hidden; height:100dvh;
     }
     a{color:inherit; text-decoration:none}
-    img{max-width:100%; height:auto; display:block}
-    .container{width:100%; max-width:var(--maxw); margin:0 auto; padding:0 20px}
+    img{display:block; max-width:100%; height:auto}
 
-    /* 헤더 */
-    header{position:sticky; top:0; z-index:50; backdrop-filter: blur(8px);
-      background: color-mix(in oklab, var(--bg) 85%, transparent);
-      border-bottom:1px solid color-mix(in oklab, var(--line) 60%, transparent);
-    }
-    .nav{display:flex; align-items:center; justify-content:space-between; height:64px}
-    .brand{font-weight:800; letter-spacing:.2px}
-    .nav a{display:inline-block; padding:10px 12px; border-radius:999px}
-    .nav a:hover{background: color-mix(in oklab, var(--panel) 80%, transparent)}
+    /* =====================
+       Preloader (STRUCTURE PRESERVED)
+       ===================== */
+    .preloader{ position:fixed; inset:0; display:grid; place-items:center; z-index:10000; opacity:1; transition: opacity .9s ease-out; }
+    .preloader::before{ content:""; position:absolute; inset:-20%; background:
+      radial-gradient(800px 400px at 20% -10%, rgba(34,211,238,.16), transparent 60%),
+      radial-gradient(900px 500px at 80% -10%, rgba(0,255,128,.10), transparent 60%),
+      linear-gradient(135deg, #0a0c12 0%, #0d1019 60%, #0a0c12 100%);
+      filter:saturate(1.1); }
+    .preloader.fade-out{ opacity:0; pointer-events:none }
 
-    /* 공통 */
-    section{padding:42px 0}
-    h1,h2,h3{line-height:1.25; margin:0 0 10px}
-    h1{font-size: clamp(26px, 4.4vw, 40px)}
-    h2{font-size: clamp(20px, 3vw, 26px)}
-    p.lead{color:var(--muted); margin:10px 0 0}
-    .row{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
-    .pill{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; border:1px solid color-mix(in oklab, var(--line) 60%, transparent)}
-    .btn{display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:999px; border:1px solid transparent; font-weight:700}
-    .btn-primary{background:linear-gradient(180deg, #22d3ee, var(--brand)); color:#001018; box-shadow: var(--shadow)}
+    .preloader-content{ position:relative; z-index:1; display:grid; gap:16px; place-items:center; text-align:center; color:var(--ink) }
 
-    .panel{background:var(--panel); border:1px solid color-mix(in oklab, var(--line) 60%, transparent); border-radius:var(--radius); box-shadow:var(--shadow)}
-    .grid{display:grid; gap:18px}
+    /* Ghost wrapper refined */
+    .ghost-loader{ width:72px; height:72px; display:grid; place-items:center; border-radius:22px; padding:14px; background: color-mix(in oklab, #0c111a 60%, transparent); border:1px solid color-mix(in oklab, var(--brand) 25%, transparent); box-shadow: var(--shadow) }
+    .ghost-svg{ filter: drop-shadow(0 0 24px rgba(34,211,238,.45)); animation: ghostFloat 3s ease-in-out infinite }
+    .ghost-body{ fill:#fff; opacity:.92 }
+    .ghost-eye{ fill:#000; animation: eyePulse 2.2s ease-in-out infinite; transform-origin:center }
+    .left-eye{ animation-delay:0s }
+    .right-eye{ animation-delay:.12s }
 
-    /* 소개 */
-    .intro{display:grid; gap:28px; align-items:center}
-    @media (min-width:860px){ .intro{grid-template-columns: 1.1fr .9fr} }
-    .profile{aspect-ratio:1/1; overflow:hidden; border-radius: 20px; background:#0a0c10; border:1px solid color-mix(in oklab, var(--line) 60%, transparent)}
+    @keyframes ghostFloat{ 0%,100%{ transform: translateY(0)} 50%{ transform: translateY(-8px) } }
+    @keyframes eyePulse{ 0%,100%{ transform: scale(1)} 50%{ transform: scale(1.25)} }
 
-    /* 기술 스택 */
-    .stack-grid{display:grid; gap:10px; grid-template-columns: repeat(2, minmax(0,1fr));}
-    @media (min-width:700px){ .stack-grid{grid-template-columns: repeat(4, minmax(0,1fr));} }
-    .tag{display:inline-block; padding:8px 12px; border-radius:10px; border:1px solid color-mix(in oklab, var(--line) 60%, transparent); font-size:.95rem; text-align:center}
+    .loading-text{ font-weight:600; letter-spacing:.2em; font-size:12px; text-transform:uppercase; color:var(--muted); animation: textPulse 2s ease-in-out infinite }
+    @keyframes textPulse{ 0%,100%{ opacity:1 } 50%{ opacity:.15 } }
 
-    /* 프로젝트 */
-    .proj-grid{display:grid; gap:16px; grid-template-columns:1fr}
-    @media (min-width:800px){ .proj-grid{grid-template-columns: repeat(3, 1fr)} }
-    .card{padding:18px; display:flex; flex-direction:column; gap:10px}
-    .card h3{margin:0; font-size:1.05rem}
-    .card p{margin:0; color:var(--muted); font-size:.97rem}
-    .meta{color:var(--muted); font-size:.9rem}
+    .loading-progress{ width:120px; height:4px; border-radius:999px; background: color-mix(in oklab, var(--line) 75%, transparent); overflow:hidden; box-shadow: inset 0 1px 0 rgba(255,255,255,.05) }
+    .progress-bar{ height:100%; width:0%; background: linear-gradient(90deg, var(--good), var(--brand)); box-shadow: 0 0 24px rgba(34,211,238,.45); transition: width .7s ease; opacity:.9 }
 
-    /* 연락처 */
-    .contact-list{list-style:none; padding:0; margin:0; display:grid; gap:8px}
-    .contact-list li{display:flex; gap:10px; align-items:center}
+    /* =====================
+       Main content (STRUCTURE PRESERVED)
+       ===================== */
+    .content{ position:fixed; inset:0; display:grid; place-items:center; padding:24px; text-align:center; opacity:0; transition: opacity 1.3s ease-in; z-index:1 }
+    .content.fade-in{ opacity:1 }
 
-    /* 푸터 */
-    footer{padding:28px 0 44px; color:var(--muted)}
-    .foot{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px}
+    .quote-container{ width:min(960px, 90%); background: color-mix(in oklab, var(--bg-accent) 70%, transparent); border:1px solid color-mix(in oklab, var(--brand) 20%, var(--line)); border-radius: var(--radius); padding: clamp(18px, 4vw, 32px); box-shadow: var(--shadow); backdrop-filter: blur(6px) }
+    .quote{ font-weight:800; font-size: clamp(28px, 7vw, 60px); line-height:1.08; letter-spacing:-0.02em; text-transform:uppercase; margin:0 0 18px; background: linear-gradient(180deg, #fff, #c3eaff 60%, #a2ffd1); -webkit-background-clip:text; background-clip:text; color:transparent }
+    .author{ display:inline-block; font-weight:600; color:var(--muted); letter-spacing:.25em; font-size:12px; text-transform:uppercase }
 
-    /* 프린트 최적화 */
-    @media print{
-      header, .btn{display:none}
-      body{background:#fff; color:#000}
-      .panel{box-shadow:none}
+    /* Canvas (kept hidden initially) */
+    canvas{ opacity:0 !important; transition: opacity 1.6s ease-in; position:absolute; inset:0; z-index:0; background: transparent }
+    canvas.fade-in{ opacity:1 !important }
+
+    /* Accessibility helpers */
+    @media (prefers-reduced-motion: reduce){
+      *{ animation:none !important; transition:none !important }
     }
   </style>
 </head>
 <body>
-  <!-- 헤더 -->
-  <header>
-    <div class="container nav">
-      <div class="brand">Your Name</div>
-      <nav class="row" aria-label="주요 섹션">
-        <a href="#about">소개</a>
-        <a href="#stack">기술 스택</a>
-        <a href="#projects">프로젝트</a>
-        <a href="#contact">연락처</a>
-      </nav>
-    </div>
-  </header>
-
-  <!-- 소개 -->
-  <section id="about" class="container">
-    <div class="intro">
-      <div>
-        <h1>안녕하세요, Your Name입니다.</h1>
-        <p class="lead">모던 웹과 데이터 제품을 만드는 프론트엔드/풀스택 엔지니어입니다. 성능, 접근성, 유지보수성을 중시하며 제품 지표 개선에 꾸준히 기여했습니다.</p>
-        <div class="row" style="margin-top:14px">
-          <span class="pill">경력 <strong style="margin-left:6px">5+년</strong></span>
-          <span class="pill">거주지 <strong style="margin-left:6px">Seoul, KR</strong></span>
-          <a class="btn btn-primary" href="#contact">협업/제안 문의</a>
-        </div>
+  <!-- ======= HTML CONTENT: kept as‑is (ids/classes preserved) ======= -->
+  <!-- Preloader -->
+  <div id="preloader" class="preloader">
+    <div class="preloader-content">
+      <div class="ghost-loader">
+        <svg class="ghost-svg" height="80" viewBox="0 0 512 512" width="80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <path class="ghost-body" d="m508.374 432.802s-46.6-39.038-79.495-275.781c-8.833-87.68-82.856-156.139-172.879-156.139-90.015 0-164.046 68.458-172.879 156.138-32.895 236.743-79.495 275.782-79.495 275.782-15.107 25.181 20.733 28.178 38.699 27.94 35.254-.478 35.254 40.294 70.516 40.294 35.254 0 35.254-35.261 70.508-35.261s37.396 45.343 72.65 45.343 37.389-45.343 72.651-45.343c35.254 0 35.254 35.261 70.508 35.261s35.27-40.772 70.524-40.294c17.959.238 53.798-2.76 38.692-27.94z" fill="white" />
+          <circle class="ghost-eye left-eye" cx="208" cy="225" r="22" fill="black" />
+          <circle class="ghost-eye right-eye" cx="297" cy="225" r="22" fill="black" />
+        </svg>
       </div>
-      <div class="panel" style="padding:14px">
-        <div class="profile">
-          <!-- 프로필 이미지 자리: ./images/profile.jpg  (정사각형 권장, 예: 800×800) -->
-          <img src="./images/profile.jpg" alt="프로필 사진" width="800" height="800"/>
-        </div>
-      </div>
+      <div class="loading-text">Summoning spirits</div>
+      <div class="loading-progress"><div class="progress-bar"></div></div>
     </div>
-  </section>
+  </div>
 
-  <!-- 기술 스택 -->
-  <section id="stack">
-    <div class="container">
-      <h2>기술 스택</h2>
-      <p class="lead">핵심 역량과 실무에서 빈번히 활용하는 기술입니다.</p>
-      <div class="panel" style="padding:18px; margin-top:14px">
-        <div class="stack-grid">
-          <div class="tag">JavaScript (ESNext)</div>
-          <div class="tag">TypeScript</div>
-          <div class="tag">React</div>
-          <div class="tag">Next.js</div>
-          <div class="tag">Node.js</div>
-          <div class="tag">REST / GraphQL</div>
-          <div class="tag">Tailwind / CSS</div>
-          <div class="tag">Vite / Webpack</div>
-          <div class="tag">Vitest / Jest</div>
-          <div class="tag">Playwright</div>
-          <div class="tag">AWS / Vercel</div>
-          <div class="tag">PostgreSQL</div>
-        </div>
-      </div>
+  <!-- Main Content (initially hidden) -->
+  <div class="content" id="main-content">
+    <div class="quote-container">
+      <h1 class="quote">Veil of Dust<br/>Trail of Ash<br/>Heart of Ice</h1>
+      <span class="author">Whispers through memory</span>
     </div>
-  </section>
+  </div>
 
-  <!-- 프로젝트 -->
-  <section id="projects">
-    <div class="container">
-      <h2>프로젝트</h2>
-      <p class="lead">대표 작업 일부를 요약했습니다. 더 많은 작업은 연락 주시면 포트폴리오 링크를 드립니다.</p>
-      <div class="proj-grid" style="margin-top:14px">
-        <article class="panel card">
-          <div class="meta">2024 — 현재 · 웹 애플리케이션</div>
-          <h3>데이터 분석 대시보드</h3>
-          <p>차트 렌더링 최적화와 가상 스크롤을 도입해 LCP 35% 개선. 접근성 레이블링으로 키보드 내비게이션 100% 달성.</p>
-          <div class="row"><a class="btn" href="#" aria-label="프로젝트1 링크">🔗 링크</a></div>
-        </article>
-        <article class="panel card">
-          <div class="meta">2023 · 모바일/웹</div>
-          <h3>이커머스 랜딩 최적화</h3>
-          <p>AB 테스트로 전환율 18% 상승. 이미지 lazy-loading과 preconnect로 TTI 0.8s 단축.</p>
-          <div class="row"><a class="btn" href="#">🔗 링크</a></div>
-        </article>
-        <article class="panel card">
-          <div class="meta">2022 · 오픈소스</div>
-          <h3>UI 컴포넌트 라이브러리</h3>
-          <p>트리셰이킹 가능한 컴포넌트 세트. 스토리북/테스트 자동화로 유지보수성 향상.</p>
-          <div class="row"><a class="btn" href="#">🔗 링크</a></div>
-        </article>
-      </div>
-    </div>
-  </section>
+  <!-- ======= JS: original logic kept; imports via ESM ======= -->
+  <script type="module">
+    import * as THREE from "https://esm.sh/three";
+    import { Pane } from "https://cdn.skypack.dev/tweakpane@4.0.4";
+    import { EffectComposer } from "https://esm.sh/three/examples/jsm/postprocessing/EffectComposer.js";
+    import { RenderPass } from "https://esm.sh/three/examples/jsm/postprocessing/RenderPass.js";
+    import { UnrealBloomPass } from "https://esm.sh/three/examples/jsm/postprocessing/UnrealBloomPass.js";
+    import { OutputPass } from "https://esm.sh/three/examples/jsm/postprocessing/OutputPass.js";
+    import { ShaderPass } from "https://esm.sh/three/examples/jsm/postprocessing/ShaderPass.js";
 
-  <!-- 연락처 -->
-  <section id="contact">
-    <div class="container">
-      <h2>연락처</h2>
-      <div class="panel" style="padding:18px; margin-top:14px">
-        <ul class="contact-list">
-          <li>이메일: <a href="mailto:you@example.com">you@example.com</a></li>
-          <li>GitHub: <a href="https://github.com/yourid">github.com/yourid</a></li>
-          <li>LinkedIn: <a href="https://linkedin.com/in/yourid">linkedin.com/in/yourid</a></li>
-          <li>위치: Seoul, KR</li>
-        </ul>
-        <div class="row" style="margin-top:10px">
-          <a class="btn btn-primary" href="mailto:you@example.com?subject=협업 문의">이메일 보내기</a>
-          <a class="btn" href="#about">상단으로 이동</a>
-        </div>
-      </div>
-    </div>
-  </section>
+    // ---------------- Preloader (unchanged API) ----------------
+    class PreloaderManager {
+      constructor(){
+        this.preloader = document.getElementById("preloader");
+        this.mainContent = document.getElementById("main-content");
+        this.progressBar = document.querySelector(".progress-bar");
+        this.loadingSteps = 0; this.totalSteps = 5; this.isComplete = false;
+      }
+      updateProgress(step){ this.loadingSteps = Math.min(step, this.totalSteps); const pct = (this.loadingSteps / this.totalSteps) * 100; this.progressBar.style.width = `${pct}%`; }
+      complete(canvas){ if(this.isComplete) return; this.isComplete = true; this.updateProgress(this.totalSteps); setTimeout(()=>{ this.preloader.classList.add("fade-out"); this.mainContent.classList.add("fade-in"); canvas.classList.add("fade-in"); setTimeout(()=>{ this.preloader.style.display = "none"; }, 900); }, 900); }
+    }
+    const preloader = new PreloaderManager();
 
-  <footer>
-    <div class="container foot">
-      <span>© <span id="year"></span> Your Name</span>
-      <span>Built with a single <code>index.html</code></span>
-    </div>
-  </footer>
+    // GPU hint
+    document.body.style.transform = "translateZ(0)";
+    document.body.style.backfaceVisibility = "hidden";
+    document.body.style.perspective = "1000px";
+    preloader.updateProgress(1);
 
-  <script>
-    // 현재 연도 자동 반영
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+    // ---------------- Three.js scene (original content preserved) ----------------
+    const scene = new THREE.Scene(); scene.background = null;
+    const camera = new THREE.PerspectiveCamera(75, innerWidth/innerHeight, 0.1, 1000); camera.position.z = 20;
+    preloader.updateProgress(2);
 
-  <!-- 이미지 가이드 (참고용 주석)
-    - 프로필: ./images/profile.jpg (정사각형 권장, 800×800)
-    - 파비콘: ./images/favicon.png (32×32)
-  -->
+    const renderer = new THREE.WebGLRenderer({ antialias:true, powerPreference:"high-performance", alpha:true, premultipliedAlpha:false, stencil:false, depth:true, preserveDrawingBuffer:false });
+    renderer.setSize(innerWidth, innerHeight); renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 0.9; renderer.setClearColor(0x000000, 0);
+    document.body.appendChild(renderer.domElement);
+    Object.assign(renderer.domElement.style, { position:"absolute", inset:"0", zIndex:"0", pointerEvents:"auto", background:"transparent" });
 
-  <!-- 구조화 데이터 (선택) : 검색/프리뷰 개선 -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Your Name",
-    "jobTitle": "Frontend / Full‑stack Engineer",
-    "url": "https://your-github-pages-url",
-    "email": "mailto:you@example.com",
-    "address": {"@type": "PostalAddress", "addressLocality": "Seoul", "addressCountry": "KR"},
-    "sameAs": [
-      "https://github.com/yourid",
-      "https://linkedin.com/in/yourid"
-    ]
-  }
+    const originalBloomSettings = { strength:0.3, radius:1.25, threshold:0.0 };
+    const composer = new EffectComposer(renderer);
+    const renderPass = new RenderPass(scene, camera); composer.addPass(renderPass);
+    const bloomPass = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), originalBloomSettings.strength, originalBloomSettings.radius, originalBloomSettings.threshold); composer.addPass(bloomPass);
+    preloader.updateProgress(3);
+
+    // ---------------- Analog Decay Shader (original) ----------------
+    const analogDecayShader = {
+      uniforms: { tDiffuse:{value:null}, uTime:{value:0.0}, uResolution:{ value:new THREE.Vector2(innerWidth, innerHeight)}, uAnalogGrain:{value:0.4}, uAnalogBleeding:{value:1.0}, uAnalogVSync:{value:1.0}, uAnalogScanlines:{value:1.0}, uAnalogVignette:{value:1.0}, uAnalogJitter:{value:0.4}, uAnalogIntensity:{value:0.6}, uLimboMode:{value:0.0}},
+      vertexShader:`varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
+      fragmentShader:`uniform sampler2D tDiffuse; uniform float uTime; uniform vec2 uResolution; uniform float uAnalogGrain; uniform float uAnalogBleeding; uniform float uAnalogVSync; uniform float uAnalogScanlines; uniform float uAnalogVignette; uniform float uAnalogJitter; uniform float uAnalogIntensity; uniform float uLimboMode; varying vec2 vUv; float random(vec2 st){ return fract(sin(dot(st.xy, vec2(12.9898,78.233)))*43758.5453123);} float gaussian(float z,float u,float o){ return (1.0/(o*sqrt(6.28318)))*exp(-(((z-u)*(z-u))/(2.0*(o*o)))); } vec3 grain(vec2 uv,float time,float intensity){ float seed = dot(uv, vec2(12.9898,78.233)); float noise = fract(sin(seed)*43758.5453 + time*2.0); noise = gaussian(noise, 0.0, 0.25); return vec3(noise)*intensity; } void main(){ vec2 uv=vUv; float time=uTime*1.8; vec2 jitteredUV=uv; if(uAnalogJitter>0.01){ float j=(random(vec2(floor(time*60.0)))-0.5)*0.003*uAnalogJitter*uAnalogIntensity; jitteredUV.x+=j; jitteredUV.y+=(random(vec2(floor(time*30.0)+1.0))-0.5)*0.001*uAnalogJitter*uAnalogIntensity; } if(uAnalogVSync>0.01){ float roll=sin(time*2.0+uv.y*100.0)*0.02*uAnalogVSync*uAnalogIntensity; float chance=step(0.95, random(vec2(floor(time*4.0)))); jitteredUV.y+=roll*chance; } vec4 color=texture2D(tDiffuse, jitteredUV); if(uAnalogBleeding>0.01){ float bAmt=0.012*uAnalogBleeding*uAnalogIntensity; float ph=time*1.5+uv.y*20.0; vec2 rO=vec2(sin(ph)*bAmt,0.0); vec2 bO=vec2(-sin(ph*1.1)*bAmt*0.8,0.0); float r=texture2D(tDiffuse, jitteredUV + rO).r; float g=texture2D(tDiffuse, jitteredUV).g; float b=texture2D(tDiffuse, jitteredUV + bO).b; color=vec4(r,g,b,color.a); } if(uAnalogGrain>0.01){ vec3 g=grain(uv,time,0.075*uAnalogGrain*uAnalogIntensity); g*=(1.0 - color.rgb); color.rgb+=g; } if(uAnalogScanlines>0.01){ float f=600.0 + uAnalogScanlines*400.0; float pat = sin(uv.y*f)*0.5+0.5; float inten=0.1*uAnalogScanlines*uAnalogIntensity; color.rgb *= (1.0 - pat*inten); float h = sin(uv.y*f*0.1)*0.02*uAnalogScanlines*uAnalogIntensity; color.rgb *= (1.0 - h); } if(uAnalogVignette>0.01){ vec2 v=(uv-0.5)*2.0; float vg=1.0 - dot(v,v)*0.3*uAnalogVignette*uAnalogIntensity; color.rgb*=vg; } if(uLimboMode>0.5){ float gray=dot(color.rgb, vec3(0.299,0.587,0.114)); color.rgb=vec3(gray);} gl_FragColor=color; }`
+    };
+    const analogDecayPass = new ShaderPass(analogDecayShader); composer.addPass(analogDecayPass);
+    const outputPass = new OutputPass(); composer.addPass(outputPass);
+
+    // ---------------- Parameters (original) ----------------
+    const params = { bodyColor:0x0f2027, glowColor:"orange", eyeGlowColor:"green", ghostOpacity:0.88, ghostScale:2.4, emissiveIntensity:5.8, pulseSpeed:1.6, pulseIntensity:0.6, eyeGlowIntensity:4.5, eyeGlowDecay:0.95, eyeGlowResponse:0.31, rimLightIntensity:1.8, followSpeed:0.075, wobbleAmount:0.35, floatSpeed:1.6, movementThreshold:0.07, particleCount:250, particleDecayRate:0.005, particleColor:"orange", createParticlesOnlyWhenMoving:true, particleCreationRate:5, revealRadius:43, fadeStrength:2.2, baseOpacity:0.35, revealOpacity:0.0, fireflyGlowIntensity:2.6, fireflySpeed:0.04, analogIntensity:0.6, analogGrain:0.4, analogBleeding:1.0, analogVSync:1.0, analogScanlines:1.0, analogVignette:1.0, analogJitter:0.4, limboMode:false };
+
+    const fluorescentColors = { cyan:0x00ffff, lime:0x00ff00, magenta:0xff00ff, yellow:0xffff00, orange:0xff4500, pink:0xff1493, purple:0x9400d3, blue:0x0080ff, green:0x00ff80, red:0xff0040, teal:0x00ffaa, violet:0x8a2be2 };
+
+    // Atmosphere plane (original shader but color tuned to new theme)
+    const atmosphereGeometry = new THREE.PlaneGeometry(300,300);
+    const atmosphereMaterial = new THREE.ShaderMaterial({
+      uniforms:{ ghostPosition:{value:new THREE.Vector3(0,0,0)}, revealRadius:{value:params.revealRadius}, fadeStrength:{value:params.fadeStrength}, baseOpacity:{value:params.baseOpacity}, revealOpacity:{value:params.revealOpacity}, time:{value:0} },
+      vertexShader:`varying vec2 vUv; varying vec3 vWorldPosition; void main(){ vUv=uv; vec4 w=modelMatrix*vec4(position,1.0); vWorldPosition=w.xyz; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
+      fragmentShader:`uniform vec3 ghostPosition; uniform float revealRadius; uniform float fadeStrength; uniform float baseOpacity; uniform float revealOpacity; uniform float time; varying vec2 vUv; varying vec3 vWorldPosition; void main(){ float dist = distance(vWorldPosition.xy, ghostPosition.xy); float dynamicRadius = revealRadius + sin(time * 2.0) * 5.0; float reveal = smoothstep(dynamicRadius * 0.2, dynamicRadius, dist); reveal = pow(reveal, fadeStrength); float opacity = mix(revealOpacity, baseOpacity, reveal); gl_FragColor = vec4(0.001, 0.002, 0.004, opacity); }`,
+      transparent:true, depthWrite:false
+    });
+    const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial); atmosphere.position.z = -50; atmosphere.renderOrder = -100; scene.add(atmosphere);
+
+    const ambientLight = new THREE.AmbientLight(0x0a0a2e, 0.08); scene.add(ambientLight);
+
+    // Ghost body
+    const ghostGroup = new THREE.Group(); scene.add(ghostGroup);
+    const ghostGeometry = new THREE.SphereGeometry(2, 40, 40);
+    const posAttr = ghostGeometry.getAttribute("position"); const arr = posAttr.array; for(let i=0;i<arr.length;i+=3){ if(arr[i+1] < -0.2){ const x=arr[i], z=arr[i+2]; const n1=Math.sin(x*5)*0.35, n2=Math.cos(z*4)*0.25, n3=Math.sin((x+z)*3)*0.15; arr[i+1] = -2.0 + n1 + n2 + n3; } } ghostGeometry.computeVertexNormals();
+    const ghostMaterial = new THREE.MeshStandardMaterial({ color:params.bodyColor, transparent:true, opacity:params.ghostOpacity, emissive: fluorescentColors[params.glowColor], emissiveIntensity: params.emissiveIntensity, roughness:0.02, metalness:0.0, side:THREE.DoubleSide, alphaTest:0.1 });
+    const ghostBody = new THREE.Mesh(ghostGeometry, ghostMaterial); ghostGroup.add(ghostBody);
+
+    const rimLight1 = new THREE.DirectionalLight(0x4a90e2, params.rimLightIntensity); rimLight1.position.set(-8,6,-4); scene.add(rimLight1);
+    const rimLight2 = new THREE.DirectionalLight(0x50e3c2, params.rimLightIntensity*0.7); rimLight2.position.set(8,-4,-6); scene.add(rimLight2);
+
+    preloader.updateProgress(4);
+
+    // Eyes (original positions, materials exposed)
+    function createEyes(){
+      const eyeGroup = new THREE.Group(); ghostGroup.add(eyeGroup);
+      const socketGeo = new THREE.SphereGeometry(0.45,16,16); const socketMat = new THREE.MeshBasicMaterial({ color:0x000000 });
+      const leftSocket = new THREE.Mesh(socketGeo, socketMat); leftSocket.position.set(-0.7,0.6,1.9); leftSocket.scale.set(1.1,1.0,0.6); eyeGroup.add(leftSocket);
+      const rightSocket = new THREE.Mesh(socketGeo, socketMat); rightSocket.position.set(0.7,0.6,1.9); rightSocket.scale.set(1.1,1.0,0.6); eyeGroup.add(rightSocket);
+      const eyeGeo = new THREE.SphereGeometry(0.3,12,12);
+      const leftEyeMat = new THREE.MeshBasicMaterial({ color: fluorescentColors[params.eyeGlowColor], transparent:true, opacity:0 });
+      const leftEye = new THREE.Mesh(eyeGeo, leftEyeMat); leftEye.position.set(-0.7,0.6,2.0); eyeGroup.add(leftEye);
+      const rightEyeMat = new THREE.MeshBasicMaterial({ color: fluorescentColors[params.eyeGlowColor], transparent:true, opacity:0 });
+      const rightEye = new THREE.Mesh(eyeGeo, rightEyeMat); rightEye.position.set(0.7,0.6,2.0); eyeGroup.add(rightEye);
+      const outerGeo = new THREE.SphereGeometry(0.525,12,12);
+      const leftOuterMat = new THREE.MeshBasicMaterial({ color: fluorescentColors[params.eyeGlowColor], transparent:true, opacity:0, side:THREE.BackSide });
+      const leftOuter = new THREE.Mesh(outerGeo, leftOuterMat); leftOuter.position.set(-0.7,0.6,1.95); eyeGroup.add(leftOuter);
+      const rightOuterMat = new THREE.MeshBasicMaterial({ color: fluorescentColors[params.eyeGlowColor], transparent:true, opacity:0, side:THREE.BackSide });
+      const rightOuter = new THREE.Mesh(outerGeo, rightOuterMat); rightOuter.position.set(0.7,0.6,1.95); eyeGroup.add(rightOuter);
+      return { leftEye, rightEye, leftEyeMaterial:leftEyeMat, rightEyeMaterial:rightEyeMat, leftOuterGlow:leftOuter, rightOuterGlow:rightOuter, leftOuterGlowMaterial:leftOuterMat, rightOuterGlowMaterial:rightOuterMat };
+    }
+    const eyes = createEyes();
+
+    // Fireflies (original behavior)
+    const fireflies = []; const fireflyGroup = new THREE.Group(); scene.add(fireflyGroup);
+    function createFireflies(){
+      for(let i=0;i<20;i++){
+        const coreG = new THREE.SphereGeometry(0.02,2,2); const coreM = new THREE.MeshBasicMaterial({ color:0xffff44, transparent:true, opacity:0.9 });
+        const firefly = new THREE.Mesh(coreG, coreM);
+        firefly.position.set((Math.random()-0.5)*40, (Math.random()-0.5)*30, (Math.random()-0.5)*20);
+        const glowG = new THREE.SphereGeometry(0.08,8,8); const glowM = new THREE.MeshBasicMaterial({ color:0xffff88, transparent:true, opacity:0.4, side:THREE.BackSide });
+        const glow = new THREE.Mesh(glowG, glowM); firefly.add(glow);
+        const light = new THREE.PointLight(0xffff44, 0.8, 3, 2); firefly.add(light);
+        firefly.userData = { velocity:new THREE.Vector3((Math.random()-0.5)*params.fireflySpeed, (Math.random()-0.5)*params.fireflySpeed, (Math.random()-0.5)*params.fireflySpeed), basePosition: firefly.position.clone(), phase: Math.random()*Math.PI*2, pulseSpeed: 2+Math.random()*3, glow, glowMaterial:glowM, fireflyMaterial:coreM, light };
+        fireflyGroup.add(firefly); fireflies.push(firefly);
+      }
+    }
+    createFireflies();
+
+    // Particles (original logic)
+    const particles=[]; const particleGroup=new THREE.Group(); scene.add(particleGroup);
+    const particlePool=[]; const particleGeometries=[ new THREE.SphereGeometry(0.05,6,6), new THREE.TetrahedronGeometry(0.04,0), new THREE.OctahedronGeometry(0.045,0) ];
+    const particleBaseMaterial = new THREE.MeshBasicMaterial({ color: 0xff4500, transparent:true, opacity:0, alphaTest:0.1 });
+    function initParticlePool(count){ for(let i=0;i<count;i++){ const gi=Math.floor(Math.random()*particleGeometries.length); const g=particleGeometries[gi]; const m=particleBaseMaterial.clone(); const p=new THREE.Mesh(g,m); p.visible=false; particleGroup.add(p); particlePool.push(p);} }
+    initParticlePool(100);
+    function createParticle(){ let p; if(particlePool.length>0){ p=particlePool.pop(); p.visible=true; } else if(particles.length < params.particleCount){ const gi=Math.floor(Math.random()*particleGeometries.length); const g=particleGeometries[gi]; const m=particleBaseMaterial.clone(); p=new THREE.Mesh(g,m); particleGroup.add(p);} else return null; const c=new THREE.Color(0xff4500); const hue=Math.random()*0.1-0.05; c.offsetHSL(hue,0,0); p.material.color=c; p.position.copy(ghostGroup.position); p.position.z -= 0.8 + Math.random()*0.6; const s=3.5; p.position.x += (Math.random()-0.5)*s; p.position.y += (Math.random()-0.5)*s - 0.8; const sv=0.6+Math.random()*0.7; p.scale.set(sv,sv,sv); p.rotation.set(Math.random()*Math.PI*2,Math.random()*Math.PI*2,Math.random()*Math.PI*2); p.userData.life=1.0; p.userData.decay=Math.random()*0.003 + params.particleDecayRate; p.userData.rotationSpeed={ x:(Math.random()-0.5)*0.015, y:(Math.random()-0.5)*0.015, z:(Math.random()-0.5)*0.015 }; p.userData.velocity={ x:(Math.random()-0.5)*0.012, y:(Math.random()-0.5)*0.012 - 0.002, z:(Math.random()-0.5)*0.012 - 0.006 }; p.material.opacity = Math.random()*0.9; particles.push(p); return p; }
+
+    // GUI (kept but visually tucked at top-right)
+    const pane = new Pane({ title: "Spectral Ghost", expanded:false });
+    const pe = pane.element; Object.assign(pe.style, { position:"fixed", top:"20px", right:"20px", zIndex:"10001", background:"rgba(0,0,0,.82)", border:"1px solid rgba(34,211,238,.3)", borderRadius:"12px", padding:"12px", backdropFilter:"blur(10px)" });
+
+    const glowFolder = pane.addFolder({ title:"Glow Effects", expanded:true });
+    glowFolder.addBinding(params, "glowColor", { label:"Glow Color", options:{ Cyan:"cyan", Lime:"lime", Magenta:"magenta", Yellow:"yellow", Orange:"orange", Pink:"pink", Purple:"purple", Blue:"blue", Green:"green", Red:"red", Teal:"teal", Violet:"violet" } }).on("change", ev=>{ ghostMaterial.emissive.set(fluorescentColors[ev.value]); });
+    glowFolder.addBinding(params, "emissiveIntensity", { label:"Ghost Glow", min:1, max:10, step:0.1 }).on("change", ev=> ghostMaterial.emissiveIntensity = ev.value );
+
+    const eyeFolder = pane.addFolder({ title:"Eye Controls", expanded:true });
+    eyeFolder.addBinding(params, "eyeGlowColor", { label:"Eye Glow Color", options:{ Cyan:"cyan", Lime:"lime", Magenta:"magenta", Yellow:"yellow", Orange:"orange", Pink:"pink", Purple:"purple", Blue:"blue", Green:"green", Red:"red", Teal:"teal", Violet:"violet" } }).on("change", ev=>{
+      const c = fluorescentColors[ev.value]; eyes.leftEyeMaterial.color.set(c); eyes.rightEyeMaterial.color.set(c); eyes.leftOuterGlowMaterial.color.set(c); eyes.rightOuterGlowMaterial.color.set(c);
+    });
+    eyeFolder.addBinding(params, "eyeGlowDecay", { label:"Glow Fade Speed", min:0.9, max:0.99, step:0.01 });
+    eyeFolder.addBinding(params, "eyeGlowResponse", { label:"Glow Response", min:0.05, max:0.5, step:0.01 });
+    eyeFolder.addBinding(params, "movementThreshold", { label:"Movement Threshold", min:0.01, max:0.1, step:0.01 });
+
+    const revealFolder = pane.addFolder({ title:"Background Reveal", expanded:true });
+    revealFolder.addBinding(params, "revealRadius", { label:"Reveal Radius", min:5, max:100, step:2 }).on("change", ev=> atmosphereMaterial.uniforms.revealRadius.value = ev.value );
+    revealFolder.addBinding(params, "fadeStrength", { label:"Fade Strength", min:0.1, max:3, step:0.1 }).on("change", ev=> atmosphereMaterial.uniforms.fadeStrength.value = ev.value );
+    revealFolder.addBinding(params, "baseOpacity", { label:"Base Darkness", min:0, max:1, step:0.05 }).on("change", ev=> atmosphereMaterial.uniforms.baseOpacity.value = ev.value );
+    revealFolder.addBinding(params, "revealOpacity", { label:"Revealed Opacity", min:0, max:0.5, step:0.01 }).on("change", ev=> atmosphereMaterial.uniforms.revealOpacity.value = ev.value );
+
+    const firefliesFolder = pane.addFolder({ title:"Fireflies", expanded:false });
+    firefliesFolder.addBinding(params, "fireflyGlowIntensity", { label:"Firefly Glow", min:0, max:5, step:0.1 }).on("change", ev=>{
+      fireflies.forEach(f=>{ f.userData.glowMaterial.opacity = ev.value*0.4; f.userData.fireflyMaterial.opacity = ev.value*0.9; f.userData.light.intensity = ev.value*0.8; });
+    });
+    firefliesFolder.addBinding(params, "fireflySpeed", { label:"Firefly Speed", min:0.005, max:0.1, step:0.005 });
+
+    const analogFolder = pane.addFolder({ title:"Analog Decay", expanded:true });
+    const analogDecayPass = new ShaderPass(analogDecayShader); // already added above
+    analogFolder.addBinding(params, "limboMode", { label:"Limbo" }).on("change", ev=> analogDecayPass.uniforms.uLimboMode.value = ev.value ? 1.0 : 0.0 );
+    analogFolder.addBinding(params, "analogIntensity", { label:"Overall Intensity", min:0, max:2, step:0.1 }).on("change", ev=> analogDecayPass.uniforms.uAnalogIntensity.value = ev.value );
+    analogFolder.addBinding(params, "analogGrain", { label:"Film Grain", min:0, max:3, step:0.1 }).on("change", ev=> analogDecayPass.uniforms.uAnalogGrain.value = ev.value );
+    analogFolder.addBinding(params, "analogBleeding", { label:"Color Bleeding", min:0, max:3, step:0.1 }).on("change", ev=> analogDecayPass.uniforms.uAnalogBleeding.value = ev.value );
+    analogFolder.addBinding(params, "analogVSync", { label:"VSync Roll", min:0, max:3, step:0.1 }).on("change", ev=> analogDecayPass.uniforms.uAnalogVSync.value = ev.value );
+    analogFolder.addBinding(params, "analogScanlines", { label:"Scanlines", min:0, max:3, step:0.1 }).on("change", ev=> analogDecayPass.uniforms.uAnalogScanlines.value = ev.value );
+    analogFolder.addBinding(params, "analogVignette", { label:"Vignetting", min:0, max:3, step:0.1 }).on("change", ev=> analogDecayPass.uniforms.uAnalogVignette.value = ev.value );
+    analogFolder.addBinding(params, "analogJitter", { label:"Temporal Jitter", min:0, max:3, step:0.1 }).on("change", ev=> analogDecayPass.uniforms.uAnalogJitter.value = ev.value );
+
+    const behaviorFolder = pane.addFolder({ title:"Behavior", expanded:false });
+    behaviorFolder.addBinding(params, "followSpeed", { label:"Follow Speed", min:0.01, max:0.2, step:0.005 });
+    behaviorFolder.addBinding(params, "wobbleAmount", { label:"Wobble", min:0, max:1, step:0.05 });
+
+    const particlesFolder = pane.addFolder({ title:"Particles", expanded:false });
+    particlesFolder.addBinding(params, "particleCount", { label:"Particle Count", min:50, max:400, step:10 });
+
+    // Resize
+    let resizeTimeout; addEventListener("resize", ()=>{ clearTimeout(resizeTimeout); resizeTimeout = setTimeout(()=>{ camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); composer.setSize(innerWidth, innerHeight); bloomPass.setSize(innerWidth, innerHeight); analogDecayPass.uniforms.uResolution.value.set(innerWidth, innerHeight); }, 200); });
+
+    // Mouse tracking
+    const mouse = new THREE.Vector2(); const prevMouse = new THREE.Vector2(); const mouseSpeed = new THREE.Vector2(); let lastMouseUpdate=0; let isMouseMoving=false; let mouseMovementTimer=null;
+    addEventListener("mousemove", e=>{ const now=performance.now(); if(now-lastMouseUpdate>16){ prevMouse.copy(mouse); mouse.x = (e.clientX/innerWidth)*2 - 1; mouse.y = -(e.clientY/innerHeight)*2 + 1; mouseSpeed.x = mouse.x - prevMouse.x; mouseSpeed.y = mouse.y - prevMouse.y; isMouseMoving = true; clearTimeout(mouseMovementTimer); mouseMovementTimer = setTimeout(()=>{ isMouseMoving=false }, 80); lastMouseUpdate = now; } });
+
+    // Animation
+    let lastParticleTime=0, time=0, currentMovement=0, lastFrameTime=0, isInitialized=false, frameCount=0;
+    function forceInitialRender(){ for(let i=0;i<3;i++){ composer.render(); } for(let i=0;i<10;i++){ createParticle(); } composer.render(); isInitialized=true; preloader.complete(renderer.domElement); }
+    preloader.updateProgress(5); setTimeout(forceInitialRender, 100);
+
+    function animate(timestamp){ requestAnimationFrame(animate); if(!isInitialized) return; const dt = timestamp - lastFrameTime; lastFrameTime = timestamp; if(dt>100) return; const tInc = (dt/16.67)*0.01; time += tInc; frameCount++;
+      atmosphereMaterial.uniforms.time.value = time; analogDecayPass.uniforms.uTime.value = time; analogDecayPass.uniforms.uLimboMode.value = params.limboMode ? 1.0 : 0.0;
+      const targetX = mouse.x*11, targetY = mouse.y*7; const prev = ghostGroup.position.clone();
+      ghostGroup.position.x += (targetX - ghostGroup.position.x) * params.followSpeed; ghostGroup.position.y += (targetY - ghostGroup.position.y) * params.followSpeed; atmosphereMaterial.uniforms.ghostPosition.value.copy(ghostGroup.position);
+      const moveAmt = prev.distanceTo(ghostGroup.position); currentMovement = currentMovement*params.eyeGlowDecay + moveAmt*(1-params.eyeGlowDecay);
+      const f1=Math.sin(time*params.floatSpeed*1.5)*0.03, f2=Math.cos(time*params.floatSpeed*0.7)*0.018, f3=Math.sin(time*params.floatSpeed*2.3)*0.008; ghostGroup.position.y += f1+f2+f3;
+      const pulse1=Math.sin(time*params.pulseSpeed)*params.pulseIntensity; const breathe=Math.sin(time*0.6)*0.12; ghostMaterial.emissiveIntensity = params.emissiveIntensity + pulse1 + breathe;
+      fireflies.forEach(ff=>{ const u=ff.userData; const pulse=Math.sin(time + u.phase * u.pulseSpeed)*0.4 + 0.6; u.glowMaterial.opacity = params.fireflyGlowIntensity*0.4*pulse; u.fireflyMaterial.opacity = params.fireflyGlowIntensity*0.9*pulse; u.light.intensity = params.fireflyGlowIntensity*0.8*pulse; u.velocity.x += (Math.random()-0.5)*0.001; u.velocity.y += (Math.random()-0.5)*0.001; u.velocity.z += (Math.random()-0.5)*0.001; u.velocity.clampLength(0, params.fireflySpeed); ff.position.add(u.velocity); if(Math.abs(ff.position.x)>30) u.velocity.x*=-0.5; if(Math.abs(ff.position.y)>20) u.velocity.y*=-0.5; if(Math.abs(ff.position.z)>15) u.velocity.z*=-0.5; });
+      const dir = new THREE.Vector2(targetX-ghostGroup.position.x, targetY-ghostGroup.position.y).normalize(); const tilt=0.1*params.wobbleAmount, decay=0.95; ghostBody.rotation.z = ghostBody.rotation.z*decay + -dir.x*tilt*(1-decay); ghostBody.rotation.x = ghostBody.rotation.x*decay + dir.y*tilt*(1-decay); ghostBody.rotation.y = Math.sin(time*1.4)*0.05*params.wobbleAmount; const sVar = 1 + Math.sin(time*2.1)*0.025*params.wobbleAmount + pulse1*0.015; const sBreath = 1 + Math.sin(time*0.8)*0.012; ghostBody.scale.set(sVar*sBreath, sVar*sBreath, sVar*sBreath);
+      const normalizedMouseSpeed = Math.hypot(mouseSpeed.x, mouseSpeed.y)*8; const isMoving = currentMovement > params.movementThreshold; const targetGlow = isMoving ? 1.0 : 0.0; const glowChange = isMoving ? params.eyeGlowResponse*2 : params.eyeGlowResponse; const newOpacity = eyes.leftEyeMaterial.opacity + (targetGlow - eyes.leftEyeMaterial.opacity)*glowChange; eyes.leftEyeMaterial.opacity = newOpacity; eyes.rightEyeMaterial.opacity = newOpacity; eyes.leftOuterGlowMaterial.opacity = newOpacity*0.3; eyes.rightOuterGlowMaterial.opacity = newOpacity*0.3;
+      const shouldCreate = params.createParticlesOnlyWhenMoving ? currentMovement>0.005 && isMouseMoving : currentMovement>0.005; if(shouldCreate && timestamp-lastParticleTime>100){ const speedRate = Math.floor(normalizedMouseSpeed*3); const particleRate = Math.min(params.particleCreationRate, Math.max(1, speedRate)); for(let i=0;i<particleRate;i++){ createParticle(); } lastParticleTime = timestamp; }
+      const lim = Math.min(particles.length, 60); for(let i=0;i<lim;i++){ const idx=(frameCount+i)%particles.length; const p=particles[idx]; p.userData.life -= p.userData.decay; p.material.opacity = p.userData.life*0.85; if(p.userData.velocity){ p.position.x += p.userData.velocity.x; p.position.y += p.userData.velocity.y; p.position.z += p.userData.velocity.z; const swirl = Math.cos(time*1.8 + p.position.y)*0.0008; p.position.x += swirl; } if(p.userData.rotationSpeed){ p.rotation.x += p.userData.rotationSpeed.x; p.rotation.y += p.userData.rotationSpeed.y; p.rotation.z += p.userData.rotationSpeed.z; } if(p.userData.life<=0){ p.visible=false; p.material.opacity=0; particlePool.push(p); particles.splice(idx,1); i--; } }
+      composer.render();
+    }
+
+    dispatchEvent(new MouseEvent("mousemove", { clientX: innerWidth/2, clientY: innerHeight/2 }));
+    animate(0);
   </script>
 </body>
 </html>
