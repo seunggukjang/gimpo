@@ -2,146 +2,192 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- iPhone 안전 영역과 확대 동작을 고려한 뷰포트 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>나의 이력서</title>
     <style>
+      /* ===== Reset & base a11y ===== */
+      html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
+      * { box-sizing: border-box; }
       body {
         margin: 0;
-        font-family: "Inter", "Noto Sans KR", sans-serif;
-        background-color: #f5f5f5;
+        font-family: "Inter","Noto Sans KR",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
         color: #222;
-        line-height: 1.6;
+        background: #f5f7fb;
+        line-height: 1.7; /* 더 넉넉한 줄간격 */
+        /* iPhone safe-area */
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+        padding-bottom: env(safe-area-inset-bottom);
       }
+      a { color: inherit; text-decoration: none; }
 
+      /* ===== Header ===== */
       header {
-        background: linear-gradient(135deg, #0078ff, #00d4ff);
-        color: white;
+        background: linear-gradient(135deg, #0078ff, #00c6ff);
+        color: #fff;
         text-align: center;
-        padding: 60px 20px;
+        padding: clamp(32px, 6vw, 64px) 20px;
+        padding-top: calc(env(safe-area-inset-top) + clamp(32px, 6vw, 64px));
       }
-
       header h1 {
-        margin-bottom: 10px;
-        font-size: 2.4rem;
+        margin: 0 0 8px;
+        font-size: clamp(1.6rem, 4.4vw, 2.4rem);
+        letter-spacing: -0.01em;
       }
-
       header p {
-        font-size: 1.1rem;
+        margin: 0;
+        font-size: clamp(0.95rem, 2.5vw, 1.1rem);
         opacity: 0.9;
       }
 
+      /* ===== Section layout ===== */
       section {
-        padding: 60px 20px;
+        padding: clamp(32px, 6vw, 72px) 20px;
         max-width: 900px;
         margin: 0 auto;
       }
-
       h2 {
-        font-size: 1.8rem;
-        border-bottom: 2px solid #0078ff;
+        font-size: clamp(1.25rem, 3.4vw, 1.6rem);
         display: inline-block;
-        margin-bottom: 30px;
+        margin: 0 0 22px;
         padding-bottom: 6px;
+        border-bottom: 2px solid #0078ff;
+        letter-spacing: -0.01em;
       }
 
-      /* 프로필 섹션 */
+      /* ===== Intro (프로필) ===== */
       .intro {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 40px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 28px;
       }
-
+      @media (min-width: 800px) {
+        .intro { grid-template-columns: minmax(220px, 260px) 1fr; }
+      }
       .profile {
-        flex: 1 1 220px;
+        /* 이미지 프레임 고정: iPhone에서도 안정적으로 */
+        width: 100%;
         max-width: 260px;
+        margin-inline: auto;
       }
-
       .profile img {
         width: 100%;
-        height: auto;
+        /* 반응형 + 자르기: 다양한 해상도에서 균일한 썸네일 */
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
         border-radius: 16px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        display: block;
+        background: #e9eef5;
+        box-shadow: 0 4px 10px rgba(0,0,0,.12);
+      }
+      .intro-text p {
+        font-size: clamp(0.98rem, 2.4vw, 1.05rem);
+        color: #2a2a2a;
+        margin: 0;
       }
 
-      .intro-text {
-        flex: 2 1 400px;
-      }
-
-      /* 기술 스택 */
+      /* ===== Skills (그리드) ===== */
       .skills {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 16px;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 14px;
       }
-
       .skill-item {
-        background: white;
+        background: #fff;
         border-radius: 12px;
-        padding: 20px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        padding: 18px;
         text-align: center;
-        transition: transform 0.3s ease;
+        box-shadow: 0 1px 6px rgba(0,0,0,.08);
+        transition: transform .2s ease;
+        /* 모바일 탭 영역 넉넉하게 */
+        min-height: 44px;
+        display: grid;
+        place-items: center;
+        font-size: clamp(0.95rem, 2.3vw, 1rem);
       }
+      .skill-item:active { transform: scale(.98); }
+      .skill-item:hover { transform: translateY(-3px); }
 
-      .skill-item:hover {
-        transform: translateY(-5px);
-      }
-
-      /* 프로젝트 섹션 */
+      /* ===== Projects ===== */
       .projects {
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 18px;
       }
-
       .project {
-        background: white;
-        padding: 20px;
+        background: #fff;
+        padding: 18px;
         border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 8px rgba(0,0,0,.08);
       }
-
       .project h3 {
-        margin-top: 0;
-        color: #0078ff;
+        margin: 0 0 6px;
+        color: #006de0;
+        font-size: clamp(1.05rem, 3vw, 1.15rem);
+        letter-spacing: -0.01em;
+      }
+      .project p {
+        margin: 0;
+        font-size: clamp(0.96rem, 2.3vw, 1rem);
+        color: #2b2b2b;
       }
 
-      /* 연락처 */
+      /* ===== Contact (네비게이션 유사 링크 간격 개선 + 터치 영역 확대) ===== */
       .contact {
         text-align: center;
       }
-
-      .contact a {
-        display: inline-block;
-        margin: 8px;
-        padding: 10px 18px;
-        border-radius: 6px;
+      .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;              /* 링크 간 간격 확대 */
+        justify-content: center;
+      }
+      .nav-links a {
         background: #0078ff;
-        color: white;
-        text-decoration: none;
-        transition: background 0.3s;
+        color: #fff;
+        border-radius: 10px;
+        /* 터치 타겟 44x44 충족 */
+        min-height: 44px;
+        min-width: 44px;
+        padding: 12px 18px;     /* 패딩 확장 */
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 1px 6px rgba(0,0,0,.12);
+        transition: background .2s ease, transform .1s ease;
+        font-size: 1rem;
+        letter-spacing: .01em;
+      }
+      .nav-links a:hover { background: #0062d6; }
+      .nav-links a:active { transform: translateY(1px); }
+      .nav-links a:focus-visible {
+        outline: 3px solid #7cc4ff;
+        outline-offset: 2px;
       }
 
-      .contact a:hover {
-        background: #005fd4;
-      }
-
+      /* ===== Footer ===== */
       footer {
         text-align: center;
         padding: 20px;
-        background-color: #eee;
-        font-size: 0.9rem;
-        color: #555;
+        font-size: 0.95rem;
+        color: #575757;
+        background: #eef2f7;
       }
 
-      @media (max-width: 768px) {
-        header h1 {
-          font-size: 1.8rem;
-        }
-        .intro {
-          flex-direction: column;
-        }
+      /* ===== iPhone 작은 해상도 보완 ===== */
+      @media (max-width: 390px) { /* iPhone mini/SE 등 */
+        header p { font-size: 0.95rem; }
+        .nav-links { gap: 10px; }
+        .nav-links a { padding: 12px 16px; }
+      }
+
+      /* 사용자가 모션 줄이기 설정 시 애니메이션 최소화 */
+      @media (prefers-reduced-motion: reduce) {
+        * { animation: none !important; transition: none !important; }
       }
     </style>
   </head>
@@ -156,10 +202,12 @@
       <h2>소개</h2>
       <div class="intro">
         <div class="profile">
-          <!-- ✅ .jpg 확장자로 수정 -->
+          <!-- 이미지: image 폴더의 JPG 파일 / iOS 성능을 위해 lazy/decoding 추가 -->
           <img
             src="./image/54296_39721_226.jpg"
             alt="프로필 사진"
+            loading="lazy"
+            decoding="async"
           />
         </div>
         <div class="intro-text">
@@ -174,44 +222,44 @@
 
     <section id="skills">
       <h2>기술 스택</h2>
-      <div class="skills">
-        <div class="skill-item">HTML / CSS / JS</div>
-        <div class="skill-item">React / Vue</div>
-        <div class="skill-item">Node.js</div>
-        <div class="skill-item">Three.js / WebGL</div>
-        <div class="skill-item">Git / GitHub</div>
+      <div class="skills" role="list">
+        <div class="skill-item" role="listitem">HTML / CSS / JS</div>
+        <div class="skill-item" role="listitem">React / Vue</div>
+        <div class="skill-item" role="listitem">Node.js</div>
+        <div class="skill-item" role="listitem">Three.js / WebGL</div>
+        <div class="skill-item" role="listitem">Git / GitHub</div>
       </div>
     </section>
 
     <section id="projects">
       <h2>프로젝트</h2>
       <div class="projects">
-        <div class="project">
+        <article class="project">
           <h3>포트폴리오 사이트</h3>
           <p>
             React와 GSAP을 활용한 개인 포트폴리오 페이지입니다. 애니메이션과
             인터랙션을 통해 사용자 경험을 강화했습니다.
           </p>
-        </div>
-        <div class="project">
+        </article>
+        <article class="project">
           <h3>3D 인터랙티브 웹</h3>
           <p>
             Three.js로 제작한 실시간 3D 오브젝트 뷰어. 사용자는 마우스로 모델을
             회전·확대할 수 있습니다.
           </p>
-        </div>
+        </article>
       </div>
     </section>
 
-    <section id="contact">
-      <h2>연락처</h2>
-      <div class="contact">
-        <a href="mailto:example@email.com">📧 이메일 보내기</a>
-        <a href="https://github.com/yourname" target="_blank">💻 GitHub</a>
-        <a href="https://linkedin.com/in/yourname" target="_blank"
-          >🔗 LinkedIn</a
-        >
-      </div>
+    <section id="contact" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">연락처</h2>
+      <nav class="contact" aria-label="바로가기 링크">
+        <div class="nav-links">
+          <a href="mailto:example@email.com">📧 이메일</a>
+          <a href="https://github.com/yourname" target="_blank" rel="noopener noreferrer">💻 GitHub</a>
+          <a href="https://linkedin.com/in/yourname" target="_blank" rel="noopener noreferrer">🔗 LinkedIn</a>
+        </div>
+      </nav>
     </section>
 
     <footer>© 2025 홍길동. All rights reserved.</footer>
