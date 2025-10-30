@@ -1,20 +1,236 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-	<meta charset="utf-8"/>
-	<title>Kakao 지도 시작하기</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>이력서 | Your Name</title>
+  <meta name="description" content="GitHub Pages에서 바로 실행 가능한 단일 파일 이력서 페이지" />
+  <link rel="icon" href="./images/favicon.png" />
+  <meta name="theme-color" content="#0ea5e9" />
+  <style>
+    :root{
+      --bg:#0b0c10;            /* 배경 기본 */
+      --panel:#0f1217;         /* 카드/패널 */
+      --text:#e5e7eb;          /* 본문 텍스트 */
+      --muted:#a1a1aa;         /* 보조 텍스트 */
+      --line:#1f2937;          /* 라인 */
+      --brand:#0ea5e9;         /* 포인트 컬러 */
+      --radius:16px;
+      --shadow: 0 10px 30px rgba(2,6,23,.28);
+      --maxw: 1000px;
+    }
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg:#f8fafc; --panel:#ffffff; --text:#0f172a; --muted:#475569; --line:#e5e7eb; --shadow:0 8px 24px rgba(15,23,42,.08);
+      }
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; background:var(--bg); color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Apple SD Gothic Neo, "Helvetica Neue", Arial, "PingFang SC", "Malgun Gothic", sans-serif;
+      line-height:1.6;
+    }
+    a{color:inherit; text-decoration:none}
+    img{max-width:100%; height:auto; display:block}
+    .container{width:100%; max-width:var(--maxw); margin:0 auto; padding:0 20px}
+
+    /* 헤더 */
+    header{position:sticky; top:0; z-index:50; backdrop-filter: blur(8px);
+      background: color-mix(in oklab, var(--bg) 85%, transparent);
+      border-bottom:1px solid color-mix(in oklab, var(--line) 60%, transparent);
+    }
+    .nav{display:flex; align-items:center; justify-content:space-between; height:64px}
+    .brand{font-weight:800; letter-spacing:.2px}
+    .nav a{display:inline-block; padding:10px 12px; border-radius:999px}
+    .nav a:hover{background: color-mix(in oklab, var(--panel) 80%, transparent)}
+
+    /* 공통 */
+    section{padding:42px 0}
+    h1,h2,h3{line-height:1.25; margin:0 0 10px}
+    h1{font-size: clamp(26px, 4.4vw, 40px)}
+    h2{font-size: clamp(20px, 3vw, 26px)}
+    p.lead{color:var(--muted); margin:10px 0 0}
+    .row{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
+    .pill{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; border:1px solid color-mix(in oklab, var(--line) 60%, transparent)}
+    .btn{display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:999px; border:1px solid transparent; font-weight:700}
+    .btn-primary{background:linear-gradient(180deg, #22d3ee, var(--brand)); color:#001018; box-shadow: var(--shadow)}
+
+    .panel{background:var(--panel); border:1px solid color-mix(in oklab, var(--line) 60%, transparent); border-radius:var(--radius); box-shadow:var(--shadow)}
+    .grid{display:grid; gap:18px}
+
+    /* 소개 */
+    .intro{display:grid; gap:28px; align-items:center}
+    @media (min-width:860px){ .intro{grid-template-columns: 1.1fr .9fr} }
+    .profile{aspect-ratio:1/1; overflow:hidden; border-radius: 20px; background:#0a0c10; border:1px solid color-mix(in oklab, var(--line) 60%, transparent)}
+
+    /* 기술 스택 */
+    .stack-grid{display:grid; gap:10px; grid-template-columns: repeat(2, minmax(0,1fr));}
+    @media (min-width:700px){ .stack-grid{grid-template-columns: repeat(4, minmax(0,1fr));} }
+    .tag{display:inline-block; padding:8px 12px; border-radius:10px; border:1px solid color-mix(in oklab, var(--line) 60%, transparent); font-size:.95rem; text-align:center}
+
+    /* 프로젝트 */
+    .proj-grid{display:grid; gap:16px; grid-template-columns:1fr}
+    @media (min-width:800px){ .proj-grid{grid-template-columns: repeat(3, 1fr)} }
+    .card{padding:18px; display:flex; flex-direction:column; gap:10px}
+    .card h3{margin:0; font-size:1.05rem}
+    .card p{margin:0; color:var(--muted); font-size:.97rem}
+    .meta{color:var(--muted); font-size:.9rem}
+
+    /* 연락처 */
+    .contact-list{list-style:none; padding:0; margin:0; display:grid; gap:8px}
+    .contact-list li{display:flex; gap:10px; align-items:center}
+
+    /* 푸터 */
+    footer{padding:28px 0 44px; color:var(--muted)}
+    .foot{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px}
+
+    /* 프린트 최적화 */
+    @media print{
+      header, .btn{display:none}
+      body{background:#fff; color:#000}
+      .panel{box-shadow:none}
+    }
+  </style>
 </head>
 <body>
-	<div id="map" style="width:500px;height:400px;"></div>
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fbb4877aeb85a93fb7cfa5535ec6a8eb"></script>
-	<script>
-		var container = document.getElementById('map');
-		var options = {
-			center: new kakao.maps.LatLng(33.450701, 126.570667),
-			level: 3
-		};
+  <!-- 헤더 -->
+  <header>
+    <div class="container nav">
+      <div class="brand">Your Name</div>
+      <nav class="row" aria-label="주요 섹션">
+        <a href="#about">소개</a>
+        <a href="#stack">기술 스택</a>
+        <a href="#projects">프로젝트</a>
+        <a href="#contact">연락처</a>
+      </nav>
+    </div>
+  </header>
 
-		var map = new kakao.maps.Map(container, options);
-	</script>
+  <!-- 소개 -->
+  <section id="about" class="container">
+    <div class="intro">
+      <div>
+        <h1>안녕하세요, Your Name입니다.</h1>
+        <p class="lead">모던 웹과 데이터 제품을 만드는 프론트엔드/풀스택 엔지니어입니다. 성능, 접근성, 유지보수성을 중시하며 제품 지표 개선에 꾸준히 기여했습니다.</p>
+        <div class="row" style="margin-top:14px">
+          <span class="pill">경력 <strong style="margin-left:6px">5+년</strong></span>
+          <span class="pill">거주지 <strong style="margin-left:6px">Seoul, KR</strong></span>
+          <a class="btn btn-primary" href="#contact">협업/제안 문의</a>
+        </div>
+      </div>
+      <div class="panel" style="padding:14px">
+        <div class="profile">
+          <!-- 프로필 이미지 자리: ./images/profile.jpg  (정사각형 권장, 예: 800×800) -->
+          <img src="./images/profile.jpg" alt="프로필 사진" width="800" height="800"/>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 기술 스택 -->
+  <section id="stack">
+    <div class="container">
+      <h2>기술 스택</h2>
+      <p class="lead">핵심 역량과 실무에서 빈번히 활용하는 기술입니다.</p>
+      <div class="panel" style="padding:18px; margin-top:14px">
+        <div class="stack-grid">
+          <div class="tag">JavaScript (ESNext)</div>
+          <div class="tag">TypeScript</div>
+          <div class="tag">React</div>
+          <div class="tag">Next.js</div>
+          <div class="tag">Node.js</div>
+          <div class="tag">REST / GraphQL</div>
+          <div class="tag">Tailwind / CSS</div>
+          <div class="tag">Vite / Webpack</div>
+          <div class="tag">Vitest / Jest</div>
+          <div class="tag">Playwright</div>
+          <div class="tag">AWS / Vercel</div>
+          <div class="tag">PostgreSQL</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 프로젝트 -->
+  <section id="projects">
+    <div class="container">
+      <h2>프로젝트</h2>
+      <p class="lead">대표 작업 일부를 요약했습니다. 더 많은 작업은 연락 주시면 포트폴리오 링크를 드립니다.</p>
+      <div class="proj-grid" style="margin-top:14px">
+        <article class="panel card">
+          <div class="meta">2024 — 현재 · 웹 애플리케이션</div>
+          <h3>데이터 분석 대시보드</h3>
+          <p>차트 렌더링 최적화와 가상 스크롤을 도입해 LCP 35% 개선. 접근성 레이블링으로 키보드 내비게이션 100% 달성.</p>
+          <div class="row"><a class="btn" href="#" aria-label="프로젝트1 링크">🔗 링크</a></div>
+        </article>
+        <article class="panel card">
+          <div class="meta">2023 · 모바일/웹</div>
+          <h3>이커머스 랜딩 최적화</h3>
+          <p>AB 테스트로 전환율 18% 상승. 이미지 lazy-loading과 preconnect로 TTI 0.8s 단축.</p>
+          <div class="row"><a class="btn" href="#">🔗 링크</a></div>
+        </article>
+        <article class="panel card">
+          <div class="meta">2022 · 오픈소스</div>
+          <h3>UI 컴포넌트 라이브러리</h3>
+          <p>트리셰이킹 가능한 컴포넌트 세트. 스토리북/테스트 자동화로 유지보수성 향상.</p>
+          <div class="row"><a class="btn" href="#">🔗 링크</a></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 연락처 -->
+  <section id="contact">
+    <div class="container">
+      <h2>연락처</h2>
+      <div class="panel" style="padding:18px; margin-top:14px">
+        <ul class="contact-list">
+          <li>이메일: <a href="mailto:you@example.com">you@example.com</a></li>
+          <li>GitHub: <a href="https://github.com/yourid">github.com/yourid</a></li>
+          <li>LinkedIn: <a href="https://linkedin.com/in/yourid">linkedin.com/in/yourid</a></li>
+          <li>위치: Seoul, KR</li>
+        </ul>
+        <div class="row" style="margin-top:10px">
+          <a class="btn btn-primary" href="mailto:you@example.com?subject=협업 문의">이메일 보내기</a>
+          <a class="btn" href="#about">상단으로 이동</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container foot">
+      <span>© <span id="year"></span> Your Name</span>
+      <span>Built with a single <code>index.html</code></span>
+    </div>
+  </footer>
+
+  <script>
+    // 현재 연도 자동 반영
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+  <!-- 이미지 가이드 (참고용 주석)
+    - 프로필: ./images/profile.jpg (정사각형 권장, 800×800)
+    - 파비콘: ./images/favicon.png (32×32)
+  -->
+
+  <!-- 구조화 데이터 (선택) : 검색/프리뷰 개선 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Your Name",
+    "jobTitle": "Frontend / Full‑stack Engineer",
+    "url": "https://your-github-pages-url",
+    "email": "mailto:you@example.com",
+    "address": {"@type": "PostalAddress", "addressLocality": "Seoul", "addressCountry": "KR"},
+    "sameAs": [
+      "https://github.com/yourid",
+      "https://linkedin.com/in/yourid"
+    ]
+  }
+  </script>
 </body>
 </html>
