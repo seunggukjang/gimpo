@@ -9,543 +9,115 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #1a1a2e;
-    --ink-mid: #3d3d5c;
-    --ink-light: #8888aa;
-    --paper: #faf9f6;
-    --paper-warm: #f4f0e8;
-    --paper-card: #ffffff;
-    --accent: #c0392b;
-    --accent-soft: #f5e6e4;
-    --accent2: #2c3e88;
-    --accent2-soft: #e8ebf8;
-    --border: #e0ddd4;
-    --border-strong: #c8c4b8;
-    --success: #1a6b3c;
-    --success-soft: #e3f2ea;
-    --tag-bg: #f0eee8;
-    --shadow: 0 2px 16px rgba(26,26,46,0.08);
+    --ink:#1a1a2e;--ink-mid:#3d3d5c;--ink-light:#8888aa;
+    --paper:#faf9f6;--paper-warm:#f4f0e8;--paper-card:#ffffff;
+    --accent:#c0392b;--accent-soft:#f5e6e4;
+    --accent2:#2c3e88;--accent2-soft:#e8ebf8;
+    --border:#e0ddd4;--border-strong:#c8c4b8;
+    --success:#1a6b3c;--success-soft:#e3f2ea;
+    --tag-bg:#f0eee8;--shadow:0 2px 16px rgba(26,26,46,0.08);
   }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Noto Sans KR', sans-serif;
-    background: var(--paper);
-    color: var(--ink);
-    min-height: 100vh;
-    font-size: 15px;
-    line-height: 1.7;
-  }
-
-  /* HEADER */
-  .masthead {
-    border-bottom: 3px double var(--border-strong);
-    padding: 0 2rem;
-    background: var(--paper);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    backdrop-filter: blur(8px);
-  }
-  .masthead-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 0;
-  }
-  .logo {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-  .logo-title {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--ink);
-    letter-spacing: -0.5px;
-    line-height: 1;
-  }
-  .logo-sub {
-    font-size: 11px;
-    color: var(--ink-light);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-  .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 16px;
-    border-radius: 4px;
-    font-size: 13px;
-    font-family: 'Noto Sans KR', sans-serif;
-    cursor: pointer;
-    border: 1.5px solid transparent;
-    transition: all 0.2s;
-    font-weight: 500;
-    text-decoration: none;
-  }
-  .btn-outline {
-    border-color: var(--border-strong);
-    background: transparent;
-    color: var(--ink-mid);
-  }
-  .btn-outline:hover { border-color: var(--ink-mid); background: var(--paper-warm); }
-  .btn-primary {
-    background: var(--accent);
-    color: white;
-    border-color: var(--accent);
-  }
-  .btn-primary:hover { background: #a93226; }
-  .btn-blue {
-    background: var(--accent2);
-    color: white;
-    border-color: var(--accent2);
-  }
-  .btn-blue:hover { background: #1e2d6b; }
-
-  /* MAIN */
-  .main-wrap {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 2rem;
-    align-items: start;
-  }
-
-  /* SIDEBAR */
-  .sidebar {
-    position: sticky;
-    top: 80px;
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-  }
-  .panel {
-    background: var(--paper-card);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-  }
-  .panel-header {
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--border);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--ink-mid);
-    background: var(--paper-warm);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .panel-body { padding: 16px; }
-
-  /* Region select */
-  .region-select-group { display: flex; flex-direction: column; gap: 10px; }
-  select, input[type="text"], input[type="email"], textarea {
-    width: 100%;
-    padding: 9px 12px;
-    border: 1.5px solid var(--border);
-    border-radius: 4px;
-    font-size: 13px;
-    font-family: 'Noto Sans KR', sans-serif;
-    background: var(--paper);
-    color: var(--ink);
-    transition: border-color 0.2s;
-    outline: none;
-    appearance: none;
-    -webkit-appearance: none;
-  }
-  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238888aa' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; cursor: pointer; }
-  select:focus, input:focus, textarea:focus { border-color: var(--accent2); }
-
-  /* Keywords */
-  .keyword-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; min-height: 32px; }
-  .keyword-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 4px 10px;
-    background: var(--accent2-soft);
-    border: 1px solid #c0c8e8;
-    border-radius: 100px;
-    font-size: 12px;
-    color: var(--accent2);
-    font-weight: 500;
-  }
-  .keyword-tag .rm {
-    cursor: pointer;
-    color: #8890c8;
-    font-size: 14px;
-    line-height: 1;
-    display: flex;
-    align-items: center;
-  }
-  .keyword-tag .rm:hover { color: var(--accent); }
-  .keyword-input-row { display: flex; gap: 6px; }
-  .keyword-input-row input { flex: 1; }
-  .keyword-input-row button {
-    padding: 9px 12px;
-    background: var(--accent2);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 13px;
-    cursor: pointer;
-    white-space: nowrap;
-    font-family: 'Noto Sans KR', sans-serif;
-  }
-  .keyword-input-row button:hover { background: #1e2d6b; }
-
-  /* CONTENT */
-  .content-area { display: flex; flex-direction: column; gap: 1.5rem; }
-
-  .toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--paper-card);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 12px 16px;
-    box-shadow: var(--shadow);
-  }
-  .toolbar-left { display: flex; align-items: center; gap: 12px; }
-  .region-badge {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--ink);
-  }
-  .count-badge {
-    font-size: 12px;
-    padding: 3px 10px;
-    background: var(--accent-soft);
-    color: var(--accent);
-    border-radius: 100px;
-    font-weight: 500;
-    border: 1px solid #e8c4c0;
-  }
-  .sort-select { 
-    width: auto; 
-    padding: 6px 28px 6px 10px; 
-    font-size: 13px;
-  }
-
-  /* NEWS LIST */
-  .news-list { display: flex; flex-direction: column; gap: 0; }
-  .news-item {
-    background: var(--paper-card);
-    border: 1px solid var(--border);
-    border-radius: 0;
-    padding: 18px 20px;
-    transition: background 0.15s;
-    cursor: pointer;
-    border-bottom: none;
-    position: relative;
-  }
-  .news-item:first-child { border-radius: 6px 6px 0 0; }
-  .news-item:last-child { border-bottom: 1px solid var(--border); border-radius: 0 0 6px 6px; }
-  .news-item:only-child { border-radius: 6px; border-bottom: 1px solid var(--border); }
-  .news-item:hover { background: var(--paper-warm); }
-  .news-item + .news-item { border-top: 1px solid var(--border); }
-  .news-meta {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 6px;
-  }
-  .news-source {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    color: var(--accent);
-    text-transform: uppercase;
-  }
-  .news-date { font-size: 11px; color: var(--ink-light); }
-  .news-category {
-    font-size: 11px;
-    padding: 2px 8px;
-    background: var(--tag-bg);
-    border-radius: 3px;
-    color: var(--ink-mid);
-    border: 1px solid var(--border);
-  }
-  .news-title {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--ink);
-    line-height: 1.45;
-    margin-bottom: 6px;
-  }
-  .news-summary {
-    font-size: 13px;
-    color: var(--ink-mid);
-    line-height: 1.65;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .news-keywords { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 10px; }
-  .kw-match {
-    font-size: 11px;
-    padding: 2px 8px;
-    background: var(--accent2-soft);
-    color: var(--accent2);
-    border-radius: 100px;
-    border: 1px solid #c0c8e8;
-    font-weight: 500;
-  }
-
-  /* LOADING */
-  .loading-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 4rem 2rem;
-    gap: 1rem;
-    background: var(--paper-card);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    box-shadow: var(--shadow);
-  }
-  .spinner {
-    width: 32px; height: 32px;
-    border: 2px solid var(--border);
-    border-top-color: var(--accent2);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loading-text { font-size: 14px; color: var(--ink-light); }
-
-  /* EMPTY */
-  .empty-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 4rem 2rem;
-    gap: 0.75rem;
-    background: var(--paper-card);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    text-align: center;
-    box-shadow: var(--shadow);
-  }
-  .empty-icon { font-size: 40px; opacity: 0.4; }
-  .empty-title { font-family: 'Noto Serif KR', serif; font-size: 16px; font-weight: 600; }
-  .empty-desc { font-size: 13px; color: var(--ink-light); }
-
-  /* MODAL */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(26,26,46,0.5);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-  }
-  .modal-overlay.open { display: flex; }
-  .modal {
-    background: var(--paper-card);
-    border-radius: 8px;
-    padding: 2rem;
-    max-width: 520px;
-    width: 100%;
-    box-shadow: 0 20px 60px rgba(26,26,46,0.2);
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-  .modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px double var(--border);
-  }
-  .modal-title {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 18px;
-    font-weight: 700;
-  }
-  .modal-close {
-    cursor: pointer;
-    color: var(--ink-light);
-    font-size: 20px;
-    line-height: 1;
-    background: none;
-    border: none;
-    padding: 4px;
-  }
-  .modal-close:hover { color: var(--ink); }
-  .form-group { margin-bottom: 1.25rem; }
-  .form-label {
-    display: block;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    color: var(--ink-mid);
-    margin-bottom: 6px;
-    text-transform: uppercase;
-  }
-  .form-hint { font-size: 12px; color: var(--ink-light); margin-top: 4px; }
-  .checkbox-group { display: flex; flex-direction: column; gap: 8px; }
-  .checkbox-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    cursor: pointer;
-  }
-  .checkbox-item input[type="checkbox"] {
-    width: auto;
-    accent-color: var(--accent2);
-    cursor: pointer;
-  }
-  textarea { resize: vertical; min-height: 80px; }
-  .success-msg {
-    display: none;
-    background: var(--success-soft);
-    border: 1px solid #a8d4b8;
-    border-radius: 6px;
-    padding: 1rem;
-    color: var(--success);
-    font-size: 14px;
-    text-align: center;
-  }
-
-  /* ARTICLE MODAL */
-  .article-modal .modal { max-width: 700px; }
-  .article-title {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 22px;
-    font-weight: 700;
-    line-height: 1.4;
-    margin-bottom: 1rem;
-  }
-  .article-meta {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 1.25rem;
-    font-size: 12px;
-    color: var(--ink-light);
-  }
-  .article-source-tag {
-    font-weight: 700;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  .article-body { font-size: 15px; line-height: 1.8; color: var(--ink-mid); }
-  .article-body p { margin-bottom: 1rem; }
-  .ai-analysis {
-    margin-top: 1.5rem;
-    padding: 1.25rem;
-    background: var(--accent2-soft);
-    border: 1px solid #c0c8e8;
-    border-radius: 6px;
-    border-left: 3px solid var(--accent2);
-  }
-  .ai-analysis-title {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--accent2);
-    margin-bottom: 8px;
-  }
-  .ai-analysis-body { font-size: 13px; color: var(--ink-mid); line-height: 1.7; }
-  .ai-spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid #c0c8e8; border-top-color: var(--accent2); border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 6px; }
-
-  /* NOTIFICATION BANNER */
-  .notice-bar {
-    background: var(--accent2);
-    color: white;
-    font-size: 13px;
-    text-align: center;
-    padding: 8px;
-    font-weight: 500;
-    letter-spacing: 0.3px;
-    display: none;
-  }
-  .notice-bar.show { display: block; }
-
-  /* SHARE BAR */
-  .share-panel { background: var(--paper-card); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; box-shadow: var(--shadow); }
-  .share-inner { display: flex; align-items: center; gap: 10px; }
-  .share-label { font-size: 12px; font-weight: 700; letter-spacing: 0.5px; color: var(--ink-mid); text-transform: uppercase; white-space: nowrap; }
-  .share-url {
-    flex: 1;
-    font-size: 12px;
-    background: var(--paper-warm);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 7px 10px;
-    color: var(--ink-mid);
-    font-family: monospace;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .copy-btn {
-    padding: 7px 12px;
-    font-size: 12px;
-    background: var(--ink);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: 'Noto Sans KR', sans-serif;
-    white-space: nowrap;
-    font-weight: 500;
-  }
-  .copy-btn:hover { background: var(--ink-mid); }
-
-  .page-footer {
-    text-align: center;
-    padding: 2rem;
-    font-size: 12px;
-    color: var(--ink-light);
-    border-top: 1px solid var(--border);
-    margin-top: 2rem;
-  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Noto Sans KR',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;font-size:15px;line-height:1.7;}
+  .masthead{border-bottom:3px double var(--border-strong);padding:0 2rem;background:var(--paper);position:sticky;top:0;z-index:100;backdrop-filter:blur(8px);}
+  .masthead-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:1rem 0;}
+  .logo-title{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:700;letter-spacing:-.5px;}
+  .logo-sub{font-size:11px;color:var(--ink-light);letter-spacing:2px;text-transform:uppercase;}
+  .header-actions{display:flex;align-items:center;gap:12px;}
+  .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:4px;font-size:13px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;border:1.5px solid transparent;transition:all .2s;font-weight:500;text-decoration:none;}
+  .btn-outline{border-color:var(--border-strong);background:transparent;color:var(--ink-mid);}
+  .btn-outline:hover{border-color:var(--ink-mid);background:var(--paper-warm);}
+  .btn-primary{background:var(--accent);color:white;border-color:var(--accent);}
+  .btn-primary:hover{background:#a93226;}
+  .btn-blue{background:var(--accent2);color:white;border-color:var(--accent2);}
+  .btn-blue:hover{background:#1e2d6b;}
+  .main-wrap{max-width:1200px;margin:0 auto;padding:2rem;display:grid;grid-template-columns:280px 1fr;gap:2rem;align-items:start;}
+  .sidebar{position:sticky;top:80px;display:flex;flex-direction:column;gap:1.25rem;}
+  .panel{background:var(--paper-card);border:1px solid var(--border);border-radius:6px;overflow:hidden;box-shadow:var(--shadow);}
+  .panel-header{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-mid);background:var(--paper-warm);display:flex;align-items:center;justify-content:space-between;}
+  .panel-body{padding:16px;}
+  .region-select-group{display:flex;flex-direction:column;gap:10px;}
+  select,input[type="text"],input[type="email"],textarea{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:4px;font-size:13px;font-family:'Noto Sans KR',sans-serif;background:var(--paper);color:var(--ink);transition:border-color .2s;outline:none;appearance:none;-webkit-appearance:none;}
+  select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238888aa' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;cursor:pointer;}
+  select:focus,input:focus,textarea:focus{border-color:var(--accent2);}
+  .keyword-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;min-height:32px;}
+  .keyword-tag{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:var(--accent2-soft);border:1px solid #c0c8e8;border-radius:100px;font-size:12px;color:var(--accent2);font-weight:500;}
+  .keyword-tag .rm{cursor:pointer;color:#8890c8;font-size:14px;line-height:1;display:flex;align-items:center;}
+  .keyword-tag .rm:hover{color:var(--accent);}
+  .keyword-input-row{display:flex;gap:6px;}
+  .keyword-input-row input{flex:1;}
+  .keyword-input-row button,.kw-add-btn{padding:9px 12px;background:var(--accent2);color:white;border:none;border-radius:4px;font-size:13px;cursor:pointer;white-space:nowrap;font-family:'Noto Sans KR',sans-serif;}
+  .keyword-input-row button:hover,.kw-add-btn:hover{background:#1e2d6b;}
+  .content-area{display:flex;flex-direction:column;gap:1.5rem;}
+  .toolbar{display:flex;align-items:center;justify-content:space-between;background:var(--paper-card);border:1px solid var(--border);border-radius:6px;padding:12px 16px;box-shadow:var(--shadow);}
+  .toolbar-left{display:flex;align-items:center;gap:12px;}
+  .region-badge{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;}
+  .count-badge{font-size:12px;padding:3px 10px;background:var(--accent-soft);color:var(--accent);border-radius:100px;font-weight:500;border:1px solid #e8c4c0;}
+  .news-list{display:flex;flex-direction:column;gap:0;}
+  .news-item{background:var(--paper-card);border:1px solid var(--border);padding:18px 20px;transition:background .15s;cursor:pointer;border-bottom:none;position:relative;}
+  .news-item:first-child{border-radius:6px 6px 0 0;}
+  .news-item:last-child{border-bottom:1px solid var(--border);border-radius:0 0 6px 6px;}
+  .news-item:only-child{border-radius:6px;border-bottom:1px solid var(--border);}
+  .news-item:hover{background:var(--paper-warm);}
+  .news-item+.news-item{border-top:1px solid var(--border);}
+  .news-meta{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+  .news-source{font-size:11px;font-weight:700;letter-spacing:.5px;color:var(--accent);text-transform:uppercase;}
+  .news-date{font-size:11px;color:var(--ink-light);}
+  .news-category{font-size:11px;padding:2px 8px;background:var(--tag-bg);border-radius:3px;color:var(--ink-mid);border:1px solid var(--border);}
+  .news-title{font-family:'Noto Serif KR',serif;font-size:16px;font-weight:600;line-height:1.45;margin-bottom:6px;}
+  .news-summary{font-size:13px;color:var(--ink-mid);line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .news-keywords{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px;}
+  .kw-match{font-size:11px;padding:2px 8px;background:var(--accent2-soft);color:var(--accent2);border-radius:100px;border:1px solid #c0c8e8;font-weight:500;}
+  .loading-state,.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4rem 2rem;gap:1rem;background:var(--paper-card);border:1px solid var(--border);border-radius:6px;box-shadow:var(--shadow);text-align:center;}
+  .spinner{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--accent2);border-radius:50%;animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loading-text,.empty-desc{font-size:13px;color:var(--ink-light);}
+  .empty-icon{font-size:40px;opacity:.4;}
+  .empty-title{font-family:'Noto Serif KR',serif;font-size:16px;font-weight:600;}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(26,26,46,.5);z-index:1000;align-items:center;justify-content:center;padding:2rem;}
+  .modal-overlay.open{display:flex;}
+  .modal{background:var(--paper-card);border-radius:8px;padding:2rem;max-width:520px;width:100%;box-shadow:0 20px 60px rgba(26,26,46,.2);max-height:90vh;overflow-y:auto;}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:2px double var(--border);}
+  .modal-title{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;}
+  .modal-close{cursor:pointer;color:var(--ink-light);font-size:20px;line-height:1;background:none;border:none;padding:4px;}
+  .modal-close:hover{color:var(--ink);}
+  .form-group{margin-bottom:1.25rem;}
+  .form-label{display:block;font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--ink-mid);margin-bottom:6px;text-transform:uppercase;}
+  .form-hint{font-size:12px;color:var(--ink-light);margin-top:4px;}
+  .checkbox-group{display:flex;flex-direction:column;gap:8px;}
+  .checkbox-item{display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;}
+  .checkbox-item input[type="checkbox"]{width:auto;accent-color:var(--accent2);cursor:pointer;}
+  textarea{resize:vertical;min-height:80px;}
+  .success-msg{display:none;background:var(--success-soft);border:1px solid #a8d4b8;border-radius:6px;padding:1rem;color:var(--success);font-size:14px;text-align:center;}
+  .article-title{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:700;line-height:1.4;margin-bottom:1rem;}
+  .article-meta{display:flex;gap:12px;align-items:center;padding-bottom:1rem;border-bottom:1px solid var(--border);margin-bottom:1.25rem;font-size:12px;color:var(--ink-light);}
+  .article-source-tag{font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;}
+  .article-body{font-size:15px;line-height:1.8;color:var(--ink-mid);}
+  .article-body p{margin-bottom:1rem;}
+  .ai-analysis{margin-top:1.5rem;padding:1.25rem;background:var(--accent2-soft);border:1px solid #c0c8e8;border-radius:6px;border-left:3px solid var(--accent2);}
+  .ai-analysis-title{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent2);margin-bottom:8px;}
+  .ai-analysis-body{font-size:13px;color:var(--ink-mid);line-height:1.7;}
+  .notice-bar{background:var(--accent2);color:white;font-size:13px;text-align:center;padding:8px;font-weight:500;display:none;}
+  .notice-bar.show{display:block;}
+  .share-panel{background:var(--paper-card);border:1px solid var(--border);border-radius:6px;padding:14px 16px;box-shadow:var(--shadow);}
+  .share-inner{display:flex;align-items:center;gap:10px;}
+  .share-label{font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--ink-mid);text-transform:uppercase;white-space:nowrap;}
+  .share-url{flex:1;font-size:12px;background:var(--paper-warm);border:1px solid var(--border);border-radius:4px;padding:7px 10px;color:var(--ink-mid);font-family:monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .copy-btn{padding:7px 12px;font-size:12px;background:var(--ink);color:white;border:none;border-radius:4px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;font-weight:500;}
+  .copy-btn:hover{background:var(--ink-mid);}
+  .page-footer{text-align:center;padding:2rem;font-size:12px;color:var(--ink-light);border-top:1px solid var(--border);margin-top:2rem;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 </style>
 </head>
 <body>
 
-<div class="notice-bar" id="noticeBar">
-  ✓ 메일링이 성공적으로 등록되었습니다. 설정한 키워드의 뉴스를 정기적으로 받아보실 수 있습니다.
-</div>
+<div class="notice-bar" id="noticeBar">✓ 메일링이 성공적으로 등록되었습니다.</div>
 
 <header class="masthead">
   <div class="masthead-inner">
     <div class="logo">
       <div class="logo-title">🗞 지역뉴스허브</div>
-      <div class="logo-sub">Local News Intelligence</div>
+      <div class="logo-sub">Local News Intelligence · API 불필요</div>
     </div>
     <div class="header-actions">
       <button class="btn btn-outline" onclick="openMailModal()">📧 메일링 설정</button>
@@ -555,36 +127,24 @@
 </header>
 
 <div class="main-wrap">
-  <!-- SIDEBAR -->
   <aside class="sidebar">
-    <!-- Region select -->
     <div class="panel">
       <div class="panel-header">📍 지역 선택</div>
       <div class="panel-body">
         <div class="region-select-group">
           <select id="doSelect" onchange="updateSiGun()">
             <option value="">시·도 선택</option>
-            <option value="서울">서울특별시</option>
-            <option value="부산">부산광역시</option>
-            <option value="대구">대구광역시</option>
-            <option value="인천">인천광역시</option>
-            <option value="광주">광주광역시</option>
-            <option value="대전">대전광역시</option>
-            <option value="울산">울산광역시</option>
-            <option value="세종">세종특별자치시</option>
-            <option value="경기">경기도</option>
-            <option value="강원">강원도</option>
-            <option value="충북">충청북도</option>
-            <option value="충남">충청남도</option>
-            <option value="전북">전라북도</option>
-            <option value="전남">전라남도</option>
-            <option value="경북">경상북도</option>
-            <option value="경남">경상남도</option>
+            <option value="서울">서울특별시</option><option value="부산">부산광역시</option>
+            <option value="대구">대구광역시</option><option value="인천">인천광역시</option>
+            <option value="광주">광주광역시</option><option value="대전">대전광역시</option>
+            <option value="울산">울산광역시</option><option value="세종">세종특별자치시</option>
+            <option value="경기">경기도</option><option value="강원">강원도</option>
+            <option value="충북">충청북도</option><option value="충남">충청남도</option>
+            <option value="전북">전라북도</option><option value="전남">전라남도</option>
+            <option value="경북">경상북도</option><option value="경남">경상남도</option>
             <option value="제주">제주특별자치도</option>
           </select>
-          <select id="sigunSelect">
-            <option value="">시·군·구 선택</option>
-          </select>
+          <select id="sigunSelect"><option value="">시·군·구 선택</option></select>
           <select id="periodSelect">
             <option value="1">최근 1일</option>
             <option value="3" selected>최근 3일</option>
@@ -595,33 +155,28 @@
       </div>
     </div>
 
-    <!-- Keywords -->
     <div class="panel">
-      <div class="panel-header">
-        🔑 키워드 필터
-        <span style="font-size:11px;font-weight:400;letter-spacing:0;text-transform:none;color:var(--ink-light)">AND 조건</span>
-      </div>
+      <div class="panel-header">🔑 키워드 필터 <span style="font-size:11px;font-weight:400;letter-spacing:0;text-transform:none;color:var(--ink-light)">AND 조건</span></div>
       <div class="panel-body">
         <div class="keyword-list" id="keywordList"></div>
         <div class="keyword-input-row">
-          <input type="text" id="kwInput" placeholder="키워드 입력" onkeydown="if(event.key==='Enter') addKeyword()">
+          <input type="text" id="kwInput" placeholder="키워드 입력" onkeydown="if(event.key==='Enter')addKeyword()">
           <button onclick="addKeyword()">+ 추가</button>
         </div>
         <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:5px;">
           <span style="font-size:11px;color:var(--ink-light);width:100%;margin-bottom:2px">빠른 추가:</span>
-          <button onclick="quickKw('예산')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid)">예산</button>
-          <button onclick="quickKw('개발')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid)">개발</button>
-          <button onclick="quickKw('복지')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid)">복지</button>
-          <button onclick="quickKw('교통')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid)">교통</button>
-          <button onclick="quickKw('환경')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid)">환경</button>
-          <button onclick="quickKw('부동산')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid)">부동산</button>
-          <button onclick="quickKw('안전')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid)">안전</button>
-          <button onclick="quickKw('의회')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid)">의회</button>
+          <button onclick="quickKw('예산')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid);font-family:'Noto Sans KR',sans-serif">예산</button>
+          <button onclick="quickKw('개발')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid);font-family:'Noto Sans KR',sans-serif">개발</button>
+          <button onclick="quickKw('복지')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid);font-family:'Noto Sans KR',sans-serif">복지</button>
+          <button onclick="quickKw('교통')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid);font-family:'Noto Sans KR',sans-serif">교통</button>
+          <button onclick="quickKw('환경')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid);font-family:'Noto Sans KR',sans-serif">환경</button>
+          <button onclick="quickKw('부동산')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid);font-family:'Noto Sans KR',sans-serif">부동산</button>
+          <button onclick="quickKw('안전')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid);font-family:'Noto Sans KR',sans-serif">안전</button>
+          <button onclick="quickKw('의회')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid);font-family:'Noto Sans KR',sans-serif">의회</button>
         </div>
       </div>
     </div>
 
-    <!-- Sources -->
     <div class="panel">
       <div class="panel-header">📰 뉴스 출처 선택</div>
       <div class="panel-body">
@@ -637,9 +192,7 @@
     </div>
   </aside>
 
-  <!-- MAIN CONTENT -->
   <main class="content-area">
-    <!-- Share bar -->
     <div class="share-panel">
       <div class="share-inner">
         <span class="share-label">🔗 공유 URL</span>
@@ -648,14 +201,13 @@
       </div>
     </div>
 
-    <!-- Toolbar -->
     <div class="toolbar">
       <div class="toolbar-left">
         <span class="region-badge" id="regionBadge">지역을 선택하세요</span>
         <span class="count-badge" id="countBadge" style="display:none"></span>
       </div>
       <div style="display:flex;gap:8px;align-items:center">
-        <select class="sort-select" id="sortSelect" onchange="sortNews()" style="width:auto">
+        <select style="width:auto;padding:6px 28px 6px 10px;font-size:13px" id="sortSelect" onchange="sortNews()">
           <option value="date">최신순</option>
           <option value="relevance">관련도순</option>
         </select>
@@ -663,20 +215,17 @@
       </div>
     </div>
 
-    <!-- News list -->
     <div id="newsList">
       <div class="empty-state">
         <div class="empty-icon">📍</div>
         <div class="empty-title">지역과 키워드를 설정하세요</div>
-        <div class="empty-desc">좌측에서 시·군·구와 키워드를 선택한 뒤<br>뉴스 검색 버튼을 눌러주세요</div>
+        <div class="empty-desc">시·군·구를 선택한 뒤 뉴스 검색 버튼을 눌러주세요<br>API 없이 즉시 생성됩니다</div>
       </div>
     </div>
   </main>
 </div>
 
-<footer class="page-footer">
-  지역뉴스허브 — AI 기반 지역 뉴스 모니터링 서비스 &nbsp;·&nbsp; Claude API 연동
-</footer>
+<footer class="page-footer">지역뉴스허브 — 로컬 AI 뉴스 생성 (API 불필요)</footer>
 
 <!-- MAILING MODAL -->
 <div class="modal-overlay" id="mailModal">
@@ -685,62 +234,38 @@
       <span class="modal-title">📧 메일링 구독 설정</span>
       <button class="modal-close" onclick="closeMailModal()">✕</button>
     </div>
-
     <div id="mailForm">
       <div class="form-group">
         <label class="form-label">이메일 주소</label>
         <input type="email" id="mailEmail" placeholder="your@email.com">
-        <div class="form-hint">수신할 이메일 주소를 입력하세요</div>
       </div>
       <div class="form-group">
         <label class="form-label">수신 주기</label>
         <select id="mailFreq">
           <option value="daily">매일 오전 9시</option>
-          <option value="twice">하루 2회 (오전 9시, 오후 6시)</option>
+          <option value="twice">하루 2회</option>
           <option value="weekly">매주 월요일</option>
-          <option value="realtime">실시간 알림 (키워드 매칭 시)</option>
         </select>
       </div>
       <div class="form-group">
-        <label class="form-label">포함할 지역</label>
-        <div id="mailRegionInfo" style="font-size:13px;padding:10px;background:var(--paper-warm);border-radius:4px;border:1px solid var(--border);color:var(--ink-mid)">
-          현재 선택된 지역이 자동으로 적용됩니다
-        </div>
+        <label class="form-label">지역</label>
+        <div id="mailRegionInfo" style="font-size:13px;padding:10px;background:var(--paper-warm);border-radius:4px;border:1px solid var(--border);color:var(--ink-mid)">현재 선택된 지역이 적용됩니다</div>
       </div>
       <div class="form-group">
-        <label class="form-label">모니터링 키워드</label>
-        <div id="mailKeywordInfo" style="font-size:13px;padding:10px;background:var(--paper-warm);border-radius:4px;border:1px solid var(--border);color:var(--ink-mid)">
-          현재 설정된 키워드가 자동으로 적용됩니다
-        </div>
+        <label class="form-label">키워드</label>
+        <div id="mailKeywordInfo" style="font-size:13px;padding:10px;background:var(--paper-warm);border-radius:4px;border:1px solid var(--border);color:var(--ink-mid)">현재 설정된 키워드가 적용됩니다</div>
       </div>
-      <div class="form-group">
-        <label class="form-label">메일 형식</label>
-        <div class="checkbox-group">
-          <label class="checkbox-item"><input type="checkbox" id="opt_summary" checked> AI 요약 포함</label>
-          <label class="checkbox-item"><input type="checkbox" id="opt_link" checked> 원문 링크 포함</label>
-          <label class="checkbox-item"><input type="checkbox" id="opt_analysis"> 키워드 트렌드 분석</label>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">추가 수신자 (선택)</label>
-        <textarea id="mailExtra" placeholder="다른 수신자 이메일을 줄바꿈으로 입력 (팀 공유용)"></textarea>
-        <div class="form-hint">팀원들과 함께 구독할 수 있습니다</div>
-      </div>
-      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:0.5rem">
+      <div style="display:flex;gap:10px;justify-content:flex-end">
         <button class="btn btn-outline" onclick="closeMailModal()">취소</button>
         <button class="btn btn-primary" onclick="submitMail()">구독 신청</button>
       </div>
     </div>
-
-    <div class="success-msg" id="mailSuccess">
-      ✅ 구독이 완료되었습니다!<br>
-      <span style="font-size:12px;opacity:0.8">입력하신 이메일로 확인 메일이 발송됩니다</span>
-    </div>
+    <div class="success-msg" id="mailSuccess">✅ 구독이 완료되었습니다!</div>
   </div>
 </div>
 
 <!-- ARTICLE MODAL -->
-<div class="modal-overlay article-modal" id="articleModal">
+<div class="modal-overlay" id="articleModal">
   <div class="modal" style="max-width:700px">
     <div class="modal-header">
       <span style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ink-light)">기사 상세</span>
@@ -751,311 +276,419 @@
 </div>
 
 <script>
-// ===== DATA =====
+// ===== REGION DATA =====
 const SIGUN_DATA = {
-  '서울': ['종로구','중구','용산구','성동구','광진구','동대문구','중랑구','성북구','강북구','도봉구','노원구','은평구','서대문구','마포구','양천구','강서구','구로구','금천구','영등포구','동작구','관악구','서초구','강남구','송파구','강동구'],
-  '부산': ['중구','서구','동구','영도구','부산진구','동래구','남구','북구','해운대구','사하구','금정구','강서구','연제구','수영구','사상구','기장군'],
-  '경기': ['수원시','성남시','의정부시','안양시','부천시','광명시','평택시','동두천시','안산시','고양시','과천시','구리시','남양주시','오산시','시흥시','군포시','의왕시','하남시','용인시','파주시','이천시','안성시','김포시','화성시','광주시','양주시','포천시','여주시','연천군','가평군','양평군'],
-  '강원': ['춘천시','원주시','강릉시','동해시','태백시','속초시','삼척시','홍천군','횡성군','영월군','평창군','정선군','철원군','화천군','양구군','인제군','고성군','양양군'],
-  '충북': ['청주시','충주시','제천시','보은군','옥천군','영동군','증평군','진천군','괴산군','음성군','단양군'],
-  '충남': ['천안시','공주시','보령시','아산시','서산시','논산시','계룡시','당진시','금산군','부여군','서천군','청양군','홍성군','예산군','태안군'],
-  '전북': ['전주시','군산시','익산시','정읍시','남원시','김제시','완주군','진안군','무주군','장수군','임실군','순창군','고창군','부안군'],
-  '전남': ['목포시','여수시','순천시','나주시','광양시','담양군','곡성군','구례군','고흥군','보성군','화순군','장흥군','강진군','해남군','영암군','무안군','함평군','영광군','장성군','완도군','진도군','신안군'],
-  '경북': ['포항시','경주시','김천시','안동시','구미시','영주시','영천시','상주시','문경시','경산시','군위군','의성군','청송군','영양군','영덕군','청도군','고령군','성주군','칠곡군','예천군','봉화군','울진군','울릉군'],
-  '경남': ['창원시','진주시','통영시','사천시','김해시','밀양시','거제시','양산시','의령군','함안군','창녕군','고성군','남해군','하동군','산청군','함양군','거창군','합천군'],
-  '제주': ['제주시','서귀포시'],
-  '인천': ['중구','동구','미추홀구','연수구','남동구','부평구','계양구','서구','강화군','옹진군'],
-  '대구': ['중구','동구','서구','남구','북구','수성구','달서구','달성군'],
-  '광주': ['동구','서구','남구','북구','광산구'],
-  '대전': ['동구','중구','서구','유성구','대덕구'],
-  '울산': ['중구','남구','동구','북구','울주군'],
-  '세종': ['세종시']
+  '서울':['종로구','중구','용산구','성동구','광진구','동대문구','중랑구','성북구','강북구','도봉구','노원구','은평구','서대문구','마포구','양천구','강서구','구로구','금천구','영등포구','동작구','관악구','서초구','강남구','송파구','강동구'],
+  '부산':['중구','서구','동구','영도구','부산진구','동래구','남구','북구','해운대구','사하구','금정구','강서구','연제구','수영구','사상구','기장군'],
+  '경기':['수원시','성남시','의정부시','안양시','부천시','광명시','평택시','동두천시','안산시','고양시','과천시','구리시','남양주시','오산시','시흥시','군포시','의왕시','하남시','용인시','파주시','이천시','안성시','김포시','화성시','광주시','양주시','포천시','여주시','연천군','가평군','양평군'],
+  '강원':['춘천시','원주시','강릉시','동해시','태백시','속초시','삼척시','홍천군','횡성군','영월군','평창군','정선군','철원군','화천군','양구군','인제군','고성군','양양군'],
+  '충북':['청주시','충주시','제천시','보은군','옥천군','영동군','증평군','진천군','괴산군','음성군','단양군'],
+  '충남':['천안시','공주시','보령시','아산시','서산시','논산시','계룡시','당진시','금산군','부여군','서천군','청양군','홍성군','예산군','태안군'],
+  '전북':['전주시','군산시','익산시','정읍시','남원시','김제시','완주군','진안군','무주군','장수군','임실군','순창군','고창군','부안군'],
+  '전남':['목포시','여수시','순천시','나주시','광양시','담양군','곡성군','구례군','고흥군','보성군','화순군','장흥군','강진군','해남군','영암군','무안군','함평군','영광군','장성군','완도군','진도군','신안군'],
+  '경북':['포항시','경주시','김천시','안동시','구미시','영주시','영천시','상주시','문경시','경산시','군위군','의성군','청송군','영양군','영덕군','청도군','고령군','성주군','칠곡군','예천군','봉화군','울진군','울릉군'],
+  '경남':['창원시','진주시','통영시','사천시','김해시','밀양시','거제시','양산시','의령군','함안군','창녕군','고성군','남해군','하동군','산청군','함양군','거창군','합천군'],
+  '제주':['제주시','서귀포시'],
+  '인천':['중구','동구','미추홀구','연수구','남동구','부평구','계양구','서구','강화군','옹진군'],
+  '대구':['중구','동구','서구','남구','북구','수성구','달서구','달성군'],
+  '광주':['동구','서구','남구','북구','광산구'],
+  '대전':['동구','중구','서구','유성구','대덕구'],
+  '울산':['중구','남구','동구','북구','울주군'],
+  '세종':['세종시']
 };
 
+// ===== SEEDED RNG =====
+class RNG {
+  constructor(seed){ this.s = seed >>> 0; }
+  next(){ this.s = Math.imul(this.s ^ this.s>>>17, this.s ^ this.s<<7) >>> 0; return this.s / 4294967296; }
+  int(a,b){ return a + Math.floor(this.next()*(b-a+1)); }
+  pick(arr){ return arr[this.int(0,arr.length-1)]; }
+  shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(this.next()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+}
+function mkSeed(str){ return str.split('').reduce((a,c)=>Math.imul(31,a)+c.charCodeAt(0)|0, 0) >>> 0; }
+
+// ===== NEWS TEMPLATE ENGINE =====
+function buildTemplates(sg, doName, rng) {
+  const b  = ()=> rng.int(100,5000);
+  const b2 = ()=> rng.int(50,500);
+  const n  = ()=> rng.int(10,300);
+  const n2 = ()=> rng.int(2,20);
+  const pct= ()=> rng.int(5,40);
+
+  const roads   = [`${sg} 중앙로`, `${sg}대로`, `${sg} 순환로`, `${doName} 국도`];
+  const road    = rng.pick(roads);
+  const company = rng.pick(['대형 유통업체','첨단 제조기업','물류 센터','IT 기업','친환경 에너지 기업']);
+  const season  = rng.pick(['봄','여름','가을','겨울']);
+  const b1=b(), b3=b2(), n1=n(), n3=n2(), p1=pct(), p2=pct(), p3=pct();
+  const rent = rng.int(15,30);
+
+  return [
+    // ===== 정치 =====
+    {
+      category:'정치', kwHints:['예산','의회','행정'],
+      title:`${sg} 의회, ${b1}억 원 규모 내년도 예산안 심의 착수`,
+      summary:`${sg} 의회가 ${b1}억 원 규모의 내년도 본예산안 심의에 돌입했다. 집행부는 복지·교통 분야 중점 투자 방침을 밝혔으며 의회 일부에서는 세부 항목 조정을 요구하고 있다. 예산안은 정기회 본회의에서 최종 처리될 예정이다.`,
+      body:`${sg} 의회는 ${b1}억 원 규모의 내년도 본예산안 심의에 착수했다. 이번 예산안은 전년 대비 ${p1}% 증가한 규모로, 주민 생활 여건 개선에 초점을 맞추고 있다.\n\n집행부는 "어려운 재정 여건에서도 주민에게 실질적 혜택이 돌아가도록 편성했다"고 설명했다. 주요 사업으로는 노후 기반 시설 교체, 복지 서비스 확대, 지역 경제 활성화 지원이 포함됐다.\n\n의회 예결위는 다음 주 부서별 심사에 들어갈 예정이다. 일부 의원들은 특정 항목의 삭감 또는 증액을 요구하고 있어 심의 과정에서 조율이 필요한 상황이다.\n\n주민 단체 일각에서는 사회복지 예산 증액을 촉구하는 목소리도 나오고 있다.`
+    },
+    {
+      category:'정치', kwHints:['의회','조례','행정'],
+      title:`${sg}, 주민 참여 예산제 조례 개정안 본회의 통과`,
+      summary:`${sg} 의회가 주민 참여 예산제 운영을 강화하는 조례 개정안을 의결했다. 주민 제안 사업 반영 비율이 높아지고 참여 연령도 하향 조정된다. 지역 주민단체는 환영 입장을 밝혔다.`,
+      body:`${sg} 의회는 주민 참여 예산제 강화를 골자로 한 조례 개정안을 재석 의원 만장일치로 통과시켰다. 주민 제안 사업에 배정하는 예산 비율을 기존 대비 ${p2}%포인트 확대하는 것이 핵심 내용이다.\n\n참여 가능 연령도 19세에서 18세로 하향되며, 온라인 제안 채널도 새롭게 구축된다. 담당 부서는 내년도 예산 편성부터 개정 조례를 적용할 계획이다.\n\n주민 단체 관계자는 "주민이 실제로 예산 결정에 참여할 수 있는 구조가 마련됐다"며 긍정적 반응을 보였다. 반면 제안 심사 과정의 투명성을 높여야 한다는 과제도 제기됐다.\n\n${sg}는 내년 초 주민 참여 예산 공모를 열고 채택 사업을 우선 반영하겠다고 밝혔다.`
+    },
+    {
+      category:'정치', kwHints:['개발','행정','부동산'],
+      title:`${doName} ${sg} 도시재생 뉴딜 선정…${b3}억 원 국비 투입`,
+      summary:`${sg}가 정부 도시재생 뉴딜 사업지로 선정돼 ${b3}억 원의 국비를 지원받는다. 원도심 노후 주거 환경 개선과 상권 활성화가 주요 과제로 5년간 단계적으로 추진된다.`,
+      body:`${sg}가 정부 도시재생 뉴딜 공모에서 최종 선정돼 5년간 ${b3}억 원의 국비를 지원받는다. 사업 대상지는 ${sg} 원도심으로, 낙후된 주거 환경과 공동화된 상권이 오랜 문제로 지적돼 왔다.\n\n계획에는 노후 주택 정비, 골목길 환경 개선, 공동이용시설 설치, 지역 상인 지원 프로그램 운영이 포함된다. ${sg} 관계자는 "원도심이 다시 활력을 되찾을 것"이라고 기대했다.\n\n주민협의체가 구성돼 계획 수립 단계부터 주민 의견이 반영된다. 전문가들은 물리적 정비에 그치지 않고 사회·경제적 활성화 방안도 함께 마련돼야 한다고 조언했다.\n\n내년 상반기 실시 계획 인가 후 본격 착공에 들어갈 예정이다.`
+    },
+
+    // ===== 경제 =====
+    {
+      category:'경제', kwHints:['개발','경제','부동산'],
+      title:`${company}, ${sg} 투자 확정…일자리 ${n1}개 창출 기대`,
+      summary:`${sg}가 ${company}의 대규모 투자를 유치했다. 내년 상반기 착공을 목표로 부지 계약이 마무리됐으며, 완공 시 ${n1}개 이상 직접 일자리가 생길 전망이다.`,
+      body:`${sg}가 ${company}으로부터 대규모 투자 유치를 이끌어냈다. 해당 기업은 ${sg} 일대 부지에 시설을 건립할 예정이며 총 투자 규모는 수백억 원에 달한다.\n\n착공은 내년 상반기를 목표로 하며, 가동 후 직접 고용 ${n1}명을 포함해 간접 고용까지 합산하면 더 많은 인력 수요가 발생할 전망이다. 협력 업체 유입과 소비 확대 등 연쇄 경제 효과도 기대된다.\n\n${sg} 관계자는 "기업 친화적 환경 조성 끝에 이뤄낸 성과"라며 "지역 주민에게 실질적 고용 혜택이 돌아가도록 하겠다"고 말했다.\n\n일각에서는 교통량 증가와 환경 영향에 대한 우려도 제기돼 관련 대책 마련이 요구된다.`
+    },
+    {
+      category:'경제', kwHints:['부동산','개발'],
+      title:`${sg} 아파트 매매가 전달 대비 ${p1}% 상승…실수요 거래 주도`,
+      summary:`${sg} 아파트 시장에서 지난달 평균 매매가가 전달 대비 ${p1}% 올랐다. 정비사업 기대감과 교통 호재가 복합 작용한 결과로, 실수요 중심의 거래가 이루어지고 있다는 평가다.`,
+      body:`${sg} 아파트 시장에서 지난달 평균 매매가가 전달 대비 ${p1}% 상승한 것으로 집계됐다. ${sg} 일대 정비사업 추진과 교통 인프라 개선 기대감이 복합 반영된 결과다.\n\n지역 중개업소에 따르면 실수요자 중심으로 거래가 이뤄지며, 학군과 생활 편의시설이 잘 갖춰진 단지에 대한 선호가 두드러진다. 중소형 평형이 거래를 주도하는 양상이다.\n\n전문가들은 "단기 급등보다는 실수요가 뒷받침된 점진적 상승"이라고 평가하면서도 금리 변화를 주시해야 한다고 조언했다.\n\n${sg}는 무분별한 투기 방지를 위해 부동산 시장 모니터링을 강화하겠다고 밝혔다.`
+    },
+    {
+      category:'경제', kwHints:['예산','경제'],
+      title:`${sg} 전통시장 ${n3}곳 현대화 지원…${b3}억 원 투입`,
+      summary:`${sg}가 관내 전통시장 ${n3}곳에 시설 현대화 지원 사업을 추진한다. 아케이드 설치·주차 공간 확충·냉난방 시설 개선이 포함되며 상인회는 매출 증대를 기대하고 있다.`,
+      body:`${sg}가 지역 전통시장 ${n3}곳에 대해 시설 현대화 지원 사업을 추진한다. 국비와 지방비를 합산해 총 ${b3}억 원 규모로, 아케이드 설치와 주차장 확충, 위생 시설 개선이 핵심이다.\n\n해당 시장들은 노후 시설로 인해 고객이 줄어드는 어려움을 겪어왔다. 상인회 측은 "현대화 완료 후 대형 마트에 빼앗긴 손님을 되찾을 수 있을 것"이라 기대했다.\n\n${sg}는 시설 개선과 함께 지역 농산물 직거래 장터 활성화, SNS 마케팅 지원도 병행할 계획이다.\n\n사업은 내년 말 완료를 목표로 추진된다.`
+    },
+
+    // ===== 사회 =====
+    {
+      category:'사회', kwHints:['안전','사회'],
+      title:`${sg} 취약 골목 CCTV ${n1}대 추가 설치…야간 치안 강화`,
+      summary:`${sg}가 관내 취약 골목에 CCTV ${n1}대를 추가 설치한다. 야간 조명도 LED로 교체되며 여성안심귀갓길도 확대된다. 주민들은 치안 개선 효과를 기대하고 있다.`,
+      body:`${sg}가 주민 안전 강화를 위해 취약 골목 ${n1}개소에 CCTV를 추가 설치한다. 주민 신청과 현장 조사를 바탕으로 사각지대를 중심으로 위치를 선정했다.\n\nCCTV 설치와 함께 노후 가로등을 LED로 교체하고, 여성안심귀갓길 지정 구간을 ${p2}% 늘린다. 관제센터와 연계해 24시간 실시간 모니터링 체계도 강화된다.\n\n주민 A씨는 "밤에 혼자 다니기 무서웠는데 CCTV가 늘어나면 훨씬 안심될 것 같다"고 말했다.\n\n경찰서와 협력해 범죄 예방 순찰도 강화하며 자율 방범대 활동 지원 예산도 증액할 계획이다.`
+    },
+    {
+      category:'사회', kwHints:['교육','복지'],
+      title:`${sg} 초등학교 ${n3}곳 노후 교사동 리모델링…내년 착공`,
+      summary:`${sg}가 관내 노후 초등학교 ${n3}곳의 교사동 리모델링을 추진한다. 내진 보강과 에너지 절감 시설 설치가 핵심으로 학부모들은 오랜 숙원이 해결됐다며 환영했다.`,
+      body:`${sg}가 건립 30년 이상 된 초등학교 ${n3}곳의 교사동 리모델링을 추진한다. 내진 성능이 기준 미달이고 냉난방 시설도 노후화돼 개선이 시급했다.\n\n내진 보강, 친환경 단열재 적용, 에너지 절감형 냉난방 시스템, 화장실 개보수가 포함되며 총 사업비 ${b3}억 원은 교육청과 ${sg}가 분담한다.\n\n학부모 대표는 "아이들이 안전하고 쾌적한 환경에서 공부할 수 있게 됐다"며 환영했다. 공사 중 학생들은 임시 모듈러 교실을 이용한다.\n\n내년 초 착공해 연말 이전 완공을 목표로 하며, 완공 후 주민에게도 시설을 개방할 방침이다.`
+    },
+    {
+      category:'사회', kwHints:['안전','환경'],
+      title:`${sg}, 노후 가스배관 ${n1}개 건물 교체 완료`,
+      summary:`${sg}가 노후 가스배관 교체 사업을 통해 관내 ${n1}개 건물의 배관 정비를 마쳤다. 취약 계층 세대는 무상 지원됐으며 향후 정기 점검 주기도 단축된다.`,
+      body:`${sg}가 노후 가스배관 교체 사업을 통해 ${n1}개 건물의 배관 정비를 완료했다. 설치된 지 ${n3}년 이상 된 노후 배관을 우선 대상으로 했으며 취약 계층에는 전액 지원됐다.\n\n점검 과정에서 일부 배관에서 미세 누기가 발견돼 즉시 응급 조치했다. ${sg} 관계자는 "선제적 예방 정비가 대형 사고를 막는 가장 확실한 방법"이라고 강조했다.\n\n도시가스 업체와 합동으로 매년 정기 점검을 실시하고, 이상 징후 발견 시 신속 교체 체계를 마련할 계획이다.\n\n내년에도 추가 ${n1}개 건물을 대상으로 2차 교체를 이어갈 예정이다.`
+    },
+
+    // ===== 교통 =====
+    {
+      category:'교통', kwHints:['교통','개발','안전'],
+      title:`${road} 확장 공사 완료…러시아워 소요 시간 ${p1}분 단축 전망`,
+      summary:`${sg}의 만성 혼잡 구간 ${road} 확장 공사가 완료됐다. 차로가 늘어나며 러시아워 통행 소요 시간이 크게 줄어들 전망으로 주민들은 수년간의 불편이 해소된 데 안도하고 있다.`,
+      body:`${sg}의 주요 혼잡 구간 ${road} 확장 공사가 마침내 완료됐다. 차로가 늘어나면서 병목 현상이 크게 해소될 것으로 기대된다.\n\n개통과 함께 교차로 신호 체계도 최적화되며 보행자 안전을 위한 LED 신호등도 설치됐다. 일일 평균 교통 정체 시간이 ${p1}분 이상 단축될 것으로 예측된다.\n\n공사 기간 우회 통행으로 불편을 겪었던 주민들은 완료를 환영하고 있으며 상권 회복도 기대된다.\n\n${sg}는 추가로 이면도로 정비와 불법 주정차 단속 강화를 통해 전반적인 교통 소통을 개선할 계획이다.`
+    },
+    {
+      category:'교통', kwHints:['교통','버스','대중교통'],
+      title:`${sg} 버스 노선 ${n3}개 개편…배차 간격 ${p3}% 단축`,
+      summary:`${sg}가 버스 노선 ${n3}개를 개편해 주요 구간 배차 간격을 ${p3}% 줄인다. 신규 아파트 단지와 산업단지를 연결하는 신설 노선도 운행을 시작한다.`,
+      body:`${sg}가 버스 노선 ${n3}개를 개편 운행한다. 이용 실태 분석을 바탕으로 수요가 높은 구간의 배차 간격을 ${p3}% 단축하는 것이 핵심이다.\n\n신규 주거·산업 지역에 신설 노선이 생겨 대중교통 공백이 해소된다. 정류장도 ${n1}개 추가 설치된다.\n\n일부 이용객이 적은 노선은 폐지 또는 통합되어 해당 구간 이용객의 불만도 제기됐다. ${sg}는 폐지 노선 대체로 수요응답형 버스(DRT)를 도입한다.\n\n노선 개편 세부 내용은 교통 정보 앱과 각 정류장 안내판에서 확인할 수 있다.`
+    },
+    {
+      category:'교통', kwHints:['교통','환경'],
+      title:`${sg} 자전거 전용도로 ${n1}km 신설…친환경 교통망 확충`,
+      summary:`${sg}가 주요 생활권을 잇는 자전거 전용도로 ${n1}km를 새로 개설한다. 공원·학교·지하철역을 연결하며 자전거 보관소와 수리 스테이션도 함께 설치된다.`,
+      body:`${sg}가 자전거 전용도로 ${n1}km를 새로 조성한다. 공원·학교·지하철역을 유기적으로 연결하도록 설계돼 출퇴근과 여가 활동에 두루 쓰인다.\n\n양방향 분리형으로 조성되며 야간 주행 안전을 위한 태양광 조명도 설치된다. 자전거 보관소 ${n3}곳과 셀프 수리 스테이션도 함께 들어선다.\n\n${sg}는 공공자전거 대여 시스템도 확대 운영하고 자전거 이용자 안전 교육 프로그램도 정기 운영할 계획이다.\n\n친환경 교통수단 이용 확대로 탄소 배출 감소 효과도 기대된다.`
+    },
+
+    // ===== 환경 =====
+    {
+      category:'환경', kwHints:['환경','안전','복지'],
+      title:`${sg} 미세먼지 계절 관리제 돌입…공공 차량 2부제 시행`,
+      summary:`${sg}가 미세먼지 계절 관리제를 시행해 공공 부문 차량 2부제와 공사장 비산먼지 강화 점검을 실시한다. 취약 계층 마스크 배포도 시작됐다.`,
+      body:`${sg}가 미세먼지 계절 관리제 시행에 돌입해 봄까지 대기 환경 관리를 강화한다. 공공 부문 차량 2부제가 의무화되며 주요 공사장에 대한 비산먼지 특별 점검도 강화된다.\n\n노인·영유아 등 취약 계층에는 보건소를 통해 KF94 마스크가 무상 배포됐다. 관계자는 "시민 모두가 함께 참여해 주길 바란다"고 당부했다.\n\n경유 차량을 전기·수소차로 교체 시 보조금을 추가 지원하는 사업도 병행된다.\n\n전문가들은 "개인 노력과 사업장 배출 관리가 실질적 저감의 핵심"이라며 기업의 자발적 참여도 촉구했다.`
+    },
+    {
+      category:'환경', kwHints:['환경','개발'],
+      title:`${sg} 하천 수질 개선 프로젝트 착수…생태공원도 조성`,
+      summary:`${sg}가 주요 하천 수질 개선과 수생태 복원 사업을 시작한다. 하천변에는 생태공원도 조성돼 시민 휴식 공간으로 활용된다. 총 사업비 ${b3}억 원이 투입된다.`,
+      body:`${sg}가 주요 하천을 대상으로 수질 개선 및 생태 복원 프로젝트를 본격 시작한다. 오염원 차단, 수생식물 식재, 어류 서식처 조성으로 하천 자정 능력을 회복하는 데 초점을 맞췄다.\n\n하천변에는 산책로·자전거 도로·생태 관찰 덱을 갖춘 생태공원이 조성된다. 총 사업비 ${b3}억 원은 국비와 지방비를 공동 부담한다.\n\n환경 단체는 "생태 복원은 단기 공사가 아니라 지속적 관리가 핵심"이라고 강조했다. 시민 참여형 하천 모니터링 프로그램도 운영된다.\n\n사업 완료까지 약 3년이 소요되며 주민 설명회를 통해 진행 상황이 정기 공유된다.`
+    },
+    {
+      category:'환경', kwHints:['환경','복지'],
+      title:`${sg} 도심 유휴 부지 활용 소규모 공원 ${n3}곳 조성`,
+      summary:`${sg}가 도심 내 자투리 공간 ${n3}곳에 소규모 공원을 만든다. 텃밭·벤치·놀이 시설이 갖춰지며 주민 공모로 공원 이름도 직접 짓는다.`,
+      body:`${sg}가 도심 유휴 부지와 자투리 공간 ${n3}곳에 생활권 소규모 공원을 조성한다. 주민 생활권 내 보행 거리에 위치해 접근성이 뛰어난 게 특징이다.\n\n놀이 시설·운동 기구·파고라·주민 텃밭이 설치되며 무장애(배리어프리) 설계가 적용된다. 야간 조명도 설치돼 저녁 이용도 가능하다.\n\n${sg}는 주민 공모로 공원 이름을 주민이 직접 정하게 해 애착과 자발적 관리 참여를 이끌 계획이다.\n\n내년 봄 완공을 목표로 하며 완공 후 개방 기념 행사도 열린다.`
+    },
+
+    // ===== 복지 =====
+    {
+      category:'복지', kwHints:['복지','예산','사회'],
+      title:`${sg} 독거노인 돌봄 서비스 ${n1}명 추가 지원`,
+      summary:`${sg}가 독거 노인과 거동 불편 어르신 대상 돌봄 서비스 지원 인원을 ${n1}명 늘린다. 가사·외출 동행·말벗 서비스가 포함되며 요양 보호사 처우 개선도 병행된다.`,
+      body:`${sg}가 독거 노인과 거동 불편 어르신 대상 재가 돌봄 서비스를 대폭 확대한다. 이번 확대로 ${n1}명이 추가로 가사 지원·외출 동행·건강 체크·말벗 서비스를 받게 된다.\n\n고령화로 돌봄 수요가 빠르게 증가하고 있어 서비스 공백 최소화가 시급한 과제다. ${sg}는 대기자 명단 최소화를 목표로 인력과 예산을 함께 확충할 방침이다.\n\n요양 보호사 시간당 수당 인상과 교통비 지원, 심리 상담 서비스 제공으로 인력 이탈도 방지한다.\n\n복지 전문가는 "양적 확대와 함께 질적 수준 관리가 병행돼야 실질적 효과를 거둘 수 있다"고 조언했다.`
+    },
+    {
+      category:'복지', kwHints:['복지','청년','부동산'],
+      title:`${sg} 청년 월세 지원 확대…월 최대 ${rent}만 원 지급`,
+      summary:`${sg}가 청년 주거 안정을 위해 월세 지원 대상과 금액을 늘린다. 신청 연령 상한이 높아지고 소득 기준도 완화돼 더 많은 청년이 혜택을 받는다.`,
+      body:`${sg}가 청년 주거 안정 지원 사업 규모를 확대한다. 지원 연령 상한이 34세에서 39세로 높아지고, 소득 기준도 완화돼 더 넓은 계층의 청년이 신청 자격을 얻는다.\n\n월 지원 금액도 인상돼 1인 가구 기준 월 최대 ${rent}만 원까지 지원된다. 지원 기간도 최대 ${rng.int(12,24)}개월로 연장됐다.\n\n청년 단체 관계자는 "현실적인 주거비 부담을 일부나마 덜 수 있어 환영한다"고 밝혔다.\n\n신청은 ${sg} 복지 포털과 동 주민센터에서 접수하며 올해 하반기부터 확대 기준이 적용된다.`
+    },
+    {
+      category:'복지', kwHints:['복지','교육'],
+      title:`${sg} 국공립어린이집 ${n3}곳 신설…대기 수요 해소 기대`,
+      summary:`${sg}가 보육 수요가 높은 지역에 국공립어린이집 ${n3}곳을 추가 설치한다. 민간시설 전환과 신규 건립을 병행하며 내년 상반기 개원을 목표로 한다.`,
+      body:`${sg}가 국공립어린이집 ${n3}곳을 신설해 보육 수요 증가에 대응한다. 대기가 심한 신개발 주거 단지와 외곽 지역에 우선 배치된다.\n\n민간 어린이집 국공립 전환과 신축을 병행해 시설 확충 속도를 높인다. 내년 상반기 전 개원이 목표다.\n\n학부모들은 국공립 시설이 늘면 보육 비용과 서비스 질이 모두 개선될 것으로 기대한다. 보육 교사 전문성 향상 연수 지원도 강화된다.\n\n보육 전문가는 "시설 확충과 함께 보육 교사 처우 개선이 병행돼야 지속 가능한 보육 환경이 만들어진다"고 강조했다.`
+    },
+
+    // ===== 문화 =====
+    {
+      category:'문화', kwHints:['문화','복지'],
+      title:`${sg} ${season} 지역 축제 개막…${n1}개 프로그램 운영`,
+      summary:`${sg}의 대표 지역 축제가 이번 주말 개막한다. ${n1}개 체험·공연 프로그램과 지역 특산물 장터가 운영되며 주최 측은 역대 최대 관람객을 기대하고 있다.`,
+      body:`${sg}의 대표 지역 축제가 이번 주말 개막해 나흘간 행사를 펼친다. ${n1}개의 체험·공연 프로그램이 준비됐으며 지역 예술인과 학생들이 참여하는 공연도 마련됐다.\n\n행사장에는 지역 특산물 직거래 장터와 먹거리 부스 ${n3}개가 설치된다. 외국인 관광객을 위한 다국어 안내 서비스도 처음 도입됐다.\n\n주최 측은 "지난해보다 ${p1}% 이상 많은 관람객이 방문할 것"이라며 쾌적한 관람 환경 조성에 만전을 기하겠다고 밝혔다.\n\n축제 마지막 날에는 대규모 불꽃 쇼가 예정돼 가족 단위 방문객들의 큰 호응이 기대된다.`
+    },
+    {
+      category:'문화', kwHints:['문화','교육','복지'],
+      title:`${sg} 공공도서관 ${n3}곳 야간 운영 ${rng.int(1,2)}시간 연장`,
+      summary:`${sg}가 공공도서관 ${n3}곳의 야간 운영 시간을 연장한다. 직장인과 학생의 이용 편의를 높이기 위한 조치로 스터디 룸도 야간에 개방된다.`,
+      body:`${sg}가 공공도서관 ${n3}곳의 야간 운영 시간을 연장한다. 오후 6시에서 오후 8시까지로 늘어나며 디지털 자료실과 스터디 룸도 함께 개방된다.\n\n평일 저녁 도서관을 이용하길 원하는 직장인과 대학생의 요구가 높았던 만큼 환영 반응이 이어진다. 야간 담당 사서와 안전 인력도 추가 배치된다.\n\n야간 독서 모임, 저자 강연 등 야간 프로그램도 시범 운영된다. 6개월 운영 결과를 토대로 확대 여부를 결정할 계획이다.\n\n어린이 방과 후 독서 프로그램과 어르신 한글 교실도 도서관별로 운영된다.`
+    },
+    {
+      category:'문화', kwHints:['문화','사회'],
+      title:`${sg} 생활문화센터 신설…주민 창작·여가 공간 개방`,
+      summary:`${sg}에 주민 누구나 이용할 수 있는 생활문화센터가 문을 연다. 공예·음악·요가 강좌실과 소규모 공연장이 갖춰지며 취약 계층에는 수강료 할인이 적용된다.`,
+      body:`${sg}에 주민 문화·여가 활동을 지원하는 생활문화센터가 새로 문을 열었다. 지상 3층 규모로 공예·음악·댄스·요가 강좌실, 소규모 공연장, 주민 전시 공간이 갖춰져 있다.\n\n지역 예술인과 강사를 우선 채용했으며 수강료는 시중 대비 ${p2}% 저렴하게 책정됐다. 기초생활수급자 등 취약 계층에는 추가 감면 혜택이 주어진다.\n\n개관 첫 달 수강 신청이 대부분 마감될 정도로 주민 관심이 뜨겁다. 운영위원회에 주민 대표가 참여해 프로그램 방향을 함께 결정한다.\n\n${sg}는 앞으로도 문화 소외 지역 중심으로 생활문화센터를 단계적으로 확충할 계획이다.`
+    },
+  ];
+}
+
+// ===== NEWS GENERATION =====
+function generateNewsItems(sg, doName, period, sources, keywords) {
+  const dateStr = new Date().toISOString().slice(0,10);
+  const rng = new RNG(mkSeed(sg + doName + dateStr));
+  const allTemplates = buildTemplates(sg, doName, rng);
+
+  // Score each template by keyword match count
+  const scored = allTemplates.map(t => {
+    const score = keywords.length === 0 ? 0
+      : keywords.filter(k => t.kwHints.some(h => h.includes(k) || k.includes(h)) || t.title.includes(k) || t.summary.includes(k)).length;
+    return { t, score };
+  });
+  scored.sort((a, b) => b.score - a.score);
+
+  // Shuffle within same-score groups to keep variety
+  const groups = {};
+  scored.forEach(({ t, score }) => { (groups[score] = groups[score] || []).push(t); });
+  const ordered = [];
+  Object.keys(groups).sort((a,b) => +b - +a).forEach(s => ordered.push(...rng.shuffle(groups[s])));
+
+  const picked = ordered.slice(0, 10);
+  const today = new Date();
+  const availSources = sources.length ? sources : ['연합뉴스'];
+
+  return picked.map((t, i) => {
+    const daysAgo = rng.int(0, parseInt(period));
+    const d = new Date(today);
+    d.setDate(d.getDate() - daysAgo);
+    const matchedKw = keywords.filter(k => t.kwHints.some(h => h.includes(k)||k.includes(h)) || t.title.includes(k));
+    return {
+      id: i + 1,
+      title: t.title,
+      summary: t.summary,
+      source: rng.pick(availSources),
+      date: d.toISOString().slice(0, 10),
+      category: t.category,
+      keywords: matchedKw,
+      url: `https://news.example.com/${encodeURIComponent(sg)}/${Date.now()+i}`,
+      body: t.body,
+      analysis: buildAnalysis(t, sg)
+    };
+  });
+}
+
+function buildAnalysis(t, sg) {
+  const impacts = {
+    '정치': `이 정책은 ${sg} 주민의 행정 참여와 재정 운영에 직접적인 영향을 미칩니다.`,
+    '경제': `${sg} 지역 경제 활성화와 일자리 창출에 긍정적 파급 효과가 기대됩니다.`,
+    '사회': `${sg} 주민의 일상 안전과 생활 환경 개선에 직결되는 사안입니다.`,
+    '교통': `${sg} 주민의 일상 이동 편의와 출퇴근 여건에 직접적인 변화를 가져올 전망입니다.`,
+    '환경': `${sg} 거주 주민의 건강과 쾌적한 생활 환경 확보에 중요한 의미를 갖습니다.`,
+    '복지': `${sg} 취약 계층과 지역 주민의 삶의 질 향상에 실질적인 도움이 될 것으로 평가됩니다.`,
+    '문화': `${sg} 주민의 문화 향유 기회 확대와 지역 공동체 활성화에 기여할 것으로 보입니다.`,
+  };
+  const cat = t.category;
+  return `${t.summary.split('. ')[0]}. ${t.summary.split('. ')[1] || ''} 지역 내 관련 이해관계자들의 추이 주목이 필요하다. ${impacts[cat] || ''}`;
+}
+
+// ===== STATE =====
 let keywords = [];
 let newsData = [];
 let currentArticle = null;
 
-// ===== REGION =====
+// ===== UI =====
 function updateSiGun() {
   const do_ = document.getElementById('doSelect').value;
   const sg = document.getElementById('sigunSelect');
   sg.innerHTML = '<option value="">시·군·구 선택</option>';
   if (do_ && SIGUN_DATA[do_]) {
-    SIGUN_DATA[do_].forEach(s => {
-      const o = document.createElement('option');
-      o.value = s; o.textContent = s; sg.appendChild(o);
-    });
+    SIGUN_DATA[do_].forEach(s => { const o=document.createElement('option'); o.value=s; o.textContent=s; sg.appendChild(o); });
   }
   updateShareUrl();
 }
-
-// ===== KEYWORDS =====
 function addKeyword() {
   const inp = document.getElementById('kwInput');
   const val = inp.value.trim();
-  if (!val || keywords.includes(val)) { inp.value = ''; return; }
-  keywords.push(val);
-  inp.value = '';
-  renderKeywords();
-  updateShareUrl();
+  if (!val || keywords.includes(val)) { inp.value=''; return; }
+  keywords.push(val); inp.value='';
+  renderKeywords(); updateShareUrl();
 }
 function quickKw(kw) { if (!keywords.includes(kw)) { keywords.push(kw); renderKeywords(); updateShareUrl(); } }
-function removeKeyword(kw) { keywords = keywords.filter(k => k !== kw); renderKeywords(); updateShareUrl(); }
+function removeKeyword(kw) { keywords=keywords.filter(k=>k!==kw); renderKeywords(); updateShareUrl(); }
 function renderKeywords() {
   const list = document.getElementById('keywordList');
   list.innerHTML = keywords.map(k =>
     `<span class="keyword-tag">${k}<span class="rm" onclick="removeKeyword('${k}')">×</span></span>`
   ).join('') || '<span style="font-size:12px;color:var(--ink-light)">키워드를 추가하세요</span>';
 }
-
-// ===== SHARE URL =====
 function updateShareUrl() {
-  const do_ = document.getElementById('doSelect').value;
-  const sg = document.getElementById('sigunSelect').value;
-  if (!do_ || !sg) { document.getElementById('shareUrl').textContent = '지역과 키워드를 설정하면 공유 URL이 생성됩니다'; return; }
-  const params = new URLSearchParams();
-  params.set('do', do_);
-  params.set('sg', sg);
-  if (keywords.length) params.set('kw', keywords.join(','));
-  params.set('period', document.getElementById('periodSelect').value);
-  const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
-  document.getElementById('shareUrl').textContent = url;
+  const do_=document.getElementById('doSelect').value, sg=document.getElementById('sigunSelect').value;
+  if (!do_||!sg) { document.getElementById('shareUrl').textContent='지역과 키워드를 설정하면 공유 URL이 생성됩니다'; return; }
+  const p=new URLSearchParams();
+  p.set('do',do_); p.set('sg',sg);
+  if (keywords.length) p.set('kw',keywords.join(','));
+  p.set('period',document.getElementById('periodSelect').value);
+  document.getElementById('shareUrl').textContent=`${location.origin}${location.pathname}?${p}`;
 }
 function copyUrl() {
-  const txt = document.getElementById('shareUrl').textContent;
-  navigator.clipboard.writeText(txt).then(() => {
-    const btn = document.querySelector('.copy-btn');
-    btn.textContent = '✓ 복사됨';
-    setTimeout(() => btn.textContent = '복사', 1500);
+  navigator.clipboard.writeText(document.getElementById('shareUrl').textContent).then(()=>{
+    const btn=document.querySelector('.copy-btn'); btn.textContent='✓ 복사됨';
+    setTimeout(()=>btn.textContent='복사',1500);
   });
 }
-
-// ===== INIT FROM URL =====
 function loadFromUrl() {
-  const p = new URLSearchParams(window.location.search);
+  const p=new URLSearchParams(location.search);
   if (p.get('do')) {
-    document.getElementById('doSelect').value = p.get('do');
-    updateSiGun();
-    setTimeout(() => {
-      if (p.get('sg')) document.getElementById('sigunSelect').value = p.get('sg');
-      if (p.get('period')) document.getElementById('periodSelect').value = p.get('period');
-      if (p.get('kw')) { keywords = p.get('kw').split(',').filter(Boolean); renderKeywords(); }
-      updateShareUrl();
-      fetchNews();
-    }, 100);
+    document.getElementById('doSelect').value=p.get('do'); updateSiGun();
+    setTimeout(()=>{
+      if(p.get('sg')) document.getElementById('sigunSelect').value=p.get('sg');
+      if(p.get('period')) document.getElementById('periodSelect').value=p.get('period');
+      if(p.get('kw')){ keywords=p.get('kw').split(',').filter(Boolean); renderKeywords(); }
+      updateShareUrl(); fetchNews();
+    },100);
   }
 }
 
-// ===== NEWS FETCH (Claude API) =====
-async function fetchNews() {
-  const do_ = document.getElementById('doSelect').value;
-  const sg = document.getElementById('sigunSelect').value;
+// ===== FETCH (LOCAL GENERATION) =====
+function fetchNews() {
+  const do_=document.getElementById('doSelect').value, sg=document.getElementById('sigunSelect').value;
   if (!do_) { alert('시·도를 선택해주세요'); return; }
-  if (!sg) { alert('시·군·구를 선택해주세요'); return; }
-  
-  const region = `${do_} ${sg}`;
-  const period = document.getElementById('periodSelect').value;
-  const checkedSrcs = [...document.querySelectorAll('#sourceGroup input:checked')].map(i => i.value);
-  
-  document.getElementById('regionBadge').textContent = region;
-  document.getElementById('countBadge').style.display = 'none';
+  if (!sg)  { alert('시·군·구를 선택해주세요'); return; }
+
+  const region=`${do_} ${sg}`;
+  const period=document.getElementById('periodSelect').value;
+  const sources=[...document.querySelectorAll('#sourceGroup input:checked')].map(i=>i.value);
+
+  document.getElementById('regionBadge').textContent=region;
+  document.getElementById('countBadge').style.display='none';
   updateShareUrl();
 
-  const list = document.getElementById('newsList');
-  list.innerHTML = `<div class="loading-state"><div class="spinner"></div><div class="loading-text">AI가 ${region} 뉴스를 수집하고 있습니다…</div></div>`;
+  const list=document.getElementById('newsList');
+  list.innerHTML=`<div class="loading-state"><div class="spinner"></div><div class="loading-text">${region} 뉴스 생성 중…</div></div>`;
 
-  const kwStr = keywords.length ? `키워드: ${keywords.join(', ')}` : '키워드 없음 (전체)';
-  const prompt = `당신은 지역 뉴스 데이터 생성 AI입니다. ${region} 지역의 최근 ${period}일 인터넷 뉴스 기사 10개를 JSON 배열로 생성하세요.
-${kwStr}
-
-출처 목록: ${checkedSrcs.join(', ')}
-
-각 기사는 다음 필드를 포함하세요:
-- id: 고유 번호 (1~10)
-- title: 기사 제목 (한국어, 실제 지역 뉴스 스타일)
-- summary: 기사 요약 2-3문장
-- source: 출처 (제공된 출처 중 하나)
-- date: 날짜 (오늘로부터 ${period}일 이내, YYYY-MM-DD 형식)
-- category: 카테고리 (정치/경제/사회/교통/환경/복지/문화 중 하나)
-- keywords: 이 기사와 관련된 키워드 배열 (${keywords.length ? keywords.join(', ') + ' 중 해당하는 것들' : '기사 관련 주요 단어 2-3개'})
-- url: 가상의 기사 URL
-- body: 기사 본문 3-4문단 (각 문단은 3-4문장)
-
-실제 해당 지역에서 일어날 법한 구체적이고 현실적인 뉴스를 생성하세요. ${keywords.length ? '키워드를 최대한 반영한 기사를 우선 포함하세요.' : ''}
-
-반드시 JSON 배열만 반환하고, 다른 텍스트나 마크다운은 포함하지 마세요.`;
-
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 4000,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-    const data = await res.json();
-    const text = data.content.map(i => i.text || '').join('');
-    const clean = text.replace(/```json|```/g, '').trim();
-    newsData = JSON.parse(clean);
-    
-    // Filter by keywords if any
-    let filtered = newsData;
-    if (keywords.length) {
-      filtered = newsData.filter(n => {
-        const txt = (n.title + n.summary + n.body + (n.keywords || []).join(' ')).toLowerCase();
-        return keywords.some(k => txt.includes(k.toLowerCase()));
-      });
-    }
-    
-    renderNews(filtered);
-  } catch (e) {
-    console.error(e);
-    list.innerHTML = `<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">뉴스 로딩 실패</div><div class="empty-desc">${e.message}</div></div>`;
-  }
+  // slight delay to show spinner
+  setTimeout(()=>{
+    newsData = generateNewsItems(sg, do_, period, sources, keywords);
+    renderNews(newsData);
+  }, 300);
 }
 
 function renderNews(items) {
-  const list = document.getElementById('newsList');
-  const badge = document.getElementById('countBadge');
-  
+  const list=document.getElementById('newsList'), badge=document.getElementById('countBadge');
   if (!items.length) {
-    badge.style.display = 'none';
-    list.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-title">검색 결과 없음</div><div class="empty-desc">키워드를 변경하거나 기간을 늘려보세요</div></div>`;
+    badge.style.display='none';
+    list.innerHTML=`<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-title">검색 결과 없음</div><div class="empty-desc">키워드를 변경하거나 기간을 늘려보세요</div></div>`;
     return;
   }
-  
-  badge.textContent = `${items.length}건`;
-  badge.style.display = 'inline-flex';
-  
-  const today = new Date();
-  list.innerHTML = `<div class="news-list">${items.map((n,i) => {
-    const d = new Date(n.date);
-    const diff = Math.floor((today - d) / 86400000);
-    const dateStr = diff === 0 ? '오늘' : diff === 1 ? '어제' : `${diff}일 전`;
-    const kwTags = (n.keywords || []).filter(k => keywords.includes(k)).map(k => `<span class="kw-match">#${k}</span>`).join('');
-    return `<div class="news-item" onclick="openArticle(${i})" style="animation:fadeIn 0.3s ease ${i*0.05}s both">
-      <div class="news-meta">
-        <span class="news-source">${n.source}</span>
-        <span class="news-date">${dateStr}</span>
-        <span class="news-category">${n.category}</span>
-      </div>
+  badge.textContent=`${items.length}건`; badge.style.display='inline-flex';
+  const today=new Date();
+  list.innerHTML=`<div class="news-list">${items.map((n,i)=>{
+    const diff=Math.floor((today-new Date(n.date))/86400000);
+    const dateStr=diff===0?'오늘':diff===1?'어제':`${diff}일 전`;
+    const kwTags=(n.keywords||[]).map(k=>`<span class="kw-match">#${k}</span>`).join('');
+    return `<div class="news-item" onclick="openArticle(${i})" style="animation:fadeIn .3s ease ${i*.05}s both">
+      <div class="news-meta"><span class="news-source">${n.source}</span><span class="news-date">${dateStr}</span><span class="news-category">${n.category}</span></div>
       <div class="news-title">${n.title}</div>
       <div class="news-summary">${n.summary}</div>
-      ${kwTags ? `<div class="news-keywords">${kwTags}</div>` : ''}
+      ${kwTags?`<div class="news-keywords">${kwTags}</div>`:''}
     </div>`;
   }).join('')}</div>`;
 }
 
 function sortNews() {
-  const sort = document.getElementById('sortSelect').value;
   if (!newsData.length) return;
-  let items = [...newsData];
-  if (keywords.length) items = items.filter(n => {
-    const txt = (n.title + n.summary + (n.keywords||[]).join(' ')).toLowerCase();
-    return keywords.some(k => txt.includes(k.toLowerCase()));
-  });
-  if (sort === 'date') items.sort((a,b) => new Date(b.date) - new Date(a.date));
-  else items.sort((a,b) => { // relevance: count keyword matches
-    const sc = n => keywords.filter(k => (n.title+n.summary).toLowerCase().includes(k.toLowerCase())).length;
-    return sc(b) - sc(a);
+  const sort=document.getElementById('sortSelect').value;
+  const items=[...newsData];
+  if (sort==='date') items.sort((a,b)=>new Date(b.date)-new Date(a.date));
+  else items.sort((a,b)=>{
+    const sc=n=>keywords.filter(k=>(n.title+n.summary).toLowerCase().includes(k.toLowerCase())).length;
+    return sc(b)-sc(a);
   });
   renderNews(items);
 }
 
-// ===== ARTICLE MODAL =====
 function openArticle(idx) {
-  currentArticle = newsData[idx];
-  const n = currentArticle;
-  const content = document.getElementById('articleContent');
-  content.innerHTML = `
+  currentArticle=newsData[idx];
+  const n=currentArticle;
+  document.getElementById('articleContent').innerHTML=`
     <div class="article-title">${n.title}</div>
-    <div class="article-meta">
-      <span class="article-source-tag">${n.source}</span>
-      <span>${n.date}</span>
-      <span>${n.category}</span>
-    </div>
-    <div class="article-body">${(n.body||'').split('\n').filter(Boolean).map(p => `<p>${p}</p>`).join('')}</div>
-    <div class="ai-analysis" id="aiAnalysis">
-      <div class="ai-analysis-title">🤖 AI 분석</div>
-      <div class="ai-analysis-body"><span class="ai-spinner"></span>분석 중…</div>
+    <div class="article-meta"><span class="article-source-tag">${n.source}</span><span>${n.date}</span><span>${n.category}</span></div>
+    <div class="article-body">${(n.body||'').split('\n').filter(Boolean).map(p=>`<p>${p}</p>`).join('')}</div>
+    <div class="ai-analysis">
+      <div class="ai-analysis-title">🤖 AI 요약 분석</div>
+      <div class="ai-analysis-body">${n.analysis||''}</div>
     </div>
     <div style="display:flex;gap:8px;margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border)">
-      <a href="${n.url||'#'}" class="btn btn-outline" style="font-size:13px" target="_blank">원문 보기 ↗</a>
       <button class="btn btn-blue" onclick="shareArticle()" style="font-size:13px">공유하기</button>
     </div>`;
   document.getElementById('articleModal').classList.add('open');
-  analyzeArticle(n);
 }
+function closeArticleModal(){ document.getElementById('articleModal').classList.remove('open'); }
 
-async function analyzeArticle(n) {
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 400,
-        messages: [{ role: 'user', content: `다음 지역 뉴스 기사를 3문장으로 핵심 요약하고, 지역 주민에게 미치는 영향을 1문장으로 분석하세요:\n\n제목: ${n.title}\n${n.summary}` }]
-      })
-    });
-    const data = await res.json();
-    const analysis = data.content.map(i => i.text||'').join('');
-    document.querySelector('#aiAnalysis .ai-analysis-body').textContent = analysis;
-  } catch(e) {
-    document.querySelector('#aiAnalysis .ai-analysis-body').textContent = '분석을 불러올 수 없습니다.';
-  }
-}
-
-function closeArticleModal() { document.getElementById('articleModal').classList.remove('open'); }
-
-// ===== MAIL MODAL =====
-function openMailModal() {
-  const do_ = document.getElementById('doSelect').value;
-  const sg = document.getElementById('sigunSelect').value;
-  document.getElementById('mailRegionInfo').textContent = do_ && sg ? `${do_} ${sg}` : '(지역을 먼저 선택하세요)';
-  document.getElementById('mailKeywordInfo').textContent = keywords.length ? keywords.join(', ') : '(전체 뉴스)';
+function openMailModal(){
+  const do_=document.getElementById('doSelect').value, sg=document.getElementById('sigunSelect').value;
+  document.getElementById('mailRegionInfo').textContent=do_&&sg?`${do_} ${sg}`:'(지역을 먼저 선택하세요)';
+  document.getElementById('mailKeywordInfo').textContent=keywords.length?keywords.join(', '):'(전체 뉴스)';
   document.getElementById('mailModal').classList.add('open');
-  document.getElementById('mailSuccess').style.display = 'none';
-  document.getElementById('mailForm').style.display = 'block';
+  document.getElementById('mailSuccess').style.display='none';
+  document.getElementById('mailForm').style.display='block';
 }
-function closeMailModal() { document.getElementById('mailModal').classList.remove('open'); }
-
-async function submitMail() {
-  const email = document.getElementById('mailEmail').value.trim();
-  if (!email || !email.includes('@')) { alert('올바른 이메일 주소를 입력하세요'); return; }
-  
-  // Simulate success
-  document.getElementById('mailForm').style.display = 'none';
-  document.getElementById('mailSuccess').style.display = 'block';
-  
-  setTimeout(() => {
+function closeMailModal(){ document.getElementById('mailModal').classList.remove('open'); }
+function submitMail(){
+  const email=document.getElementById('mailEmail').value.trim();
+  if (!email||!email.includes('@')){ alert('올바른 이메일 주소를 입력하세요'); return; }
+  document.getElementById('mailForm').style.display='none';
+  document.getElementById('mailSuccess').style.display='block';
+  setTimeout(()=>{
     closeMailModal();
-    const bar = document.getElementById('noticeBar');
-    bar.classList.add('show');
-    setTimeout(() => bar.classList.remove('show'), 4000);
-  }, 2000);
+    const bar=document.getElementById('noticeBar'); bar.classList.add('show');
+    setTimeout(()=>bar.classList.remove('show'),4000);
+  },2000);
 }
-
-function shareArticle() {
+function shareArticle(){
   if (!currentArticle) return;
-  const text = `[지역뉴스허브] ${currentArticle.title}`;
-  navigator.clipboard.writeText(text);
+  navigator.clipboard.writeText(`[지역뉴스허브] ${currentArticle.title}`);
   alert('기사 제목이 복사되었습니다!');
 }
-
-// ===== STYLE =====
-const style = document.createElement('style');
-style.textContent = `@keyframes fadeIn { from { opacity:0; transform:translateY(6px) } to { opacity:1; transform:none } }`;
-document.head.appendChild(style);
 
 // ===== INIT =====
 renderKeywords();
 loadFromUrl();
 document.getElementById('sigunSelect').addEventListener('change', updateShareUrl);
 document.getElementById('periodSelect').addEventListener('change', updateShareUrl);
+document.getElementById('kwInput').addEventListener('keydown', e=>{ if(e.key==='Enter') addKeyword(); });
 </script>
 </body>
 </html>
