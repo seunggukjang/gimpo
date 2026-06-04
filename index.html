@@ -1,267 +1,1061 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <!-- iPhone 안전 영역과 확대 동작을 고려한 뷰포트 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>나의 이력서</title>
-    <style>
-      /* ===== Reset & base a11y ===== */
-      html {
-        -webkit-text-size-adjust: 100%;
-        text-size-adjust: 100%;
-      }
-      * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        font-family: "Inter","Noto Sans KR",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-        color: #222;
-        background: #f5f7fb;
-        line-height: 1.7; /* 더 넉넉한 줄간격 */
-        /* iPhone safe-area */
-        padding-left: env(safe-area-inset-left);
-        padding-right: env(safe-area-inset-right);
-        padding-bottom: env(safe-area-inset-bottom);
-      }
-      a { color: inherit; text-decoration: none; }
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>지역뉴스허브 — 시군구 뉴스 모니터링</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --ink-mid: #3d3d5c;
+    --ink-light: #8888aa;
+    --paper: #faf9f6;
+    --paper-warm: #f4f0e8;
+    --paper-card: #ffffff;
+    --accent: #c0392b;
+    --accent-soft: #f5e6e4;
+    --accent2: #2c3e88;
+    --accent2-soft: #e8ebf8;
+    --border: #e0ddd4;
+    --border-strong: #c8c4b8;
+    --success: #1a6b3c;
+    --success-soft: #e3f2ea;
+    --tag-bg: #f0eee8;
+    --shadow: 0 2px 16px rgba(26,26,46,0.08);
+  }
 
-      /* ===== Header ===== */
-      header {
-        background: linear-gradient(135deg, #0078ff, #00c6ff);
-        color: #fff;
-        text-align: center;
-        padding: clamp(32px, 6vw, 64px) 20px;
-        padding-top: calc(env(safe-area-inset-top) + clamp(32px, 6vw, 64px));
-      }
-      header h1 {
-        margin: 0 0 8px;
-        font-size: clamp(1.6rem, 4.4vw, 2.4rem);
-        letter-spacing: -0.01em;
-      }
-      header p {
-        margin: 0;
-        font-size: clamp(0.95rem, 2.5vw, 1.1rem);
-        opacity: 0.9;
-      }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-      /* ===== Section layout ===== */
-      section {
-        padding: clamp(32px, 6vw, 72px) 20px;
-        max-width: 900px;
-        margin: 0 auto;
-      }
-      h2 {
-        font-size: clamp(1.25rem, 3.4vw, 1.6rem);
-        display: inline-block;
-        margin: 0 0 22px;
-        padding-bottom: 6px;
-        border-bottom: 2px solid #0078ff;
-        letter-spacing: -0.01em;
-      }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.7;
+  }
 
-      /* ===== Intro (프로필) ===== */
-      .intro {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 28px;
-      }
-      @media (min-width: 800px) {
-        .intro { grid-template-columns: minmax(220px, 260px) 1fr; }
-      }
-      .profile {
-        /* 이미지 프레임 고정: iPhone에서도 안정적으로 */
-        width: 100%;
-        max-width: 260px;
-        margin-inline: auto;
-      }
-      .profile img {
-        width: 100%;
-        /* 반응형 + 자르기: 다양한 해상도에서 균일한 썸네일 */
-        aspect-ratio: 1 / 1;
-        object-fit: cover;
-        border-radius: 16px;
-        display: block;
-        background: #e9eef5;
-        box-shadow: 0 4px 10px rgba(0,0,0,.12);
-      }
-      .intro-text p {
-        font-size: clamp(0.98rem, 2.4vw, 1.05rem);
-        color: #2a2a2a;
-        margin: 0;
-      }
+  /* HEADER */
+  .masthead {
+    border-bottom: 3px double var(--border-strong);
+    padding: 0 2rem;
+    background: var(--paper);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+  }
+  .masthead-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+  }
+  .logo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .logo-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.5px;
+    line-height: 1;
+  }
+  .logo-sub {
+    font-size: 11px;
+    color: var(--ink-light);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: all 0.2s;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .btn-outline {
+    border-color: var(--border-strong);
+    background: transparent;
+    color: var(--ink-mid);
+  }
+  .btn-outline:hover { border-color: var(--ink-mid); background: var(--paper-warm); }
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+  .btn-primary:hover { background: #a93226; }
+  .btn-blue {
+    background: var(--accent2);
+    color: white;
+    border-color: var(--accent2);
+  }
+  .btn-blue:hover { background: #1e2d6b; }
 
-      /* ===== Skills (그리드) ===== */
-      .skills {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        gap: 14px;
-      }
-      .skill-item {
-        background: #fff;
-        border-radius: 12px;
-        padding: 18px;
-        text-align: center;
-        box-shadow: 0 1px 6px rgba(0,0,0,.08);
-        transition: transform .2s ease;
-        /* 모바일 탭 영역 넉넉하게 */
-        min-height: 44px;
-        display: grid;
-        place-items: center;
-        font-size: clamp(0.95rem, 2.3vw, 1rem);
-      }
-      .skill-item:active { transform: scale(.98); }
-      .skill-item:hover { transform: translateY(-3px); }
+  /* MAIN */
+  .main-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
 
-      /* ===== Projects ===== */
-      .projects {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 18px;
-      }
-      .project {
-        background: #fff;
-        padding: 18px;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0,0,0,.08);
-      }
-      .project h3 {
-        margin: 0 0 6px;
-        color: #006de0;
-        font-size: clamp(1.05rem, 3vw, 1.15rem);
-        letter-spacing: -0.01em;
-      }
-      .project p {
-        margin: 0;
-        font-size: clamp(0.96rem, 2.3vw, 1rem);
-        color: #2b2b2b;
-      }
+  /* SIDEBAR */
+  .sidebar {
+    position: sticky;
+    top: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .panel {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .panel-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    background: var(--paper-warm);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .panel-body { padding: 16px; }
 
-      /* ===== Contact (네비게이션 유사 링크 간격 개선 + 터치 영역 확대) ===== */
-      .contact {
-        text-align: center;
-      }
-      .nav-links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;              /* 링크 간 간격 확대 */
-        justify-content: center;
-      }
-      .nav-links a {
-        background: #0078ff;
-        color: #fff;
-        border-radius: 10px;
-        /* 터치 타겟 44x44 충족 */
-        min-height: 44px;
-        min-width: 44px;
-        padding: 12px 18px;     /* 패딩 확장 */
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 1px 6px rgba(0,0,0,.12);
-        transition: background .2s ease, transform .1s ease;
-        font-size: 1rem;
-        letter-spacing: .01em;
-      }
-      .nav-links a:hover { background: #0062d6; }
-      .nav-links a:active { transform: translateY(1px); }
-      .nav-links a:focus-visible {
-        outline: 3px solid #7cc4ff;
-        outline-offset: 2px;
-      }
+  /* Region select */
+  .region-select-group { display: flex; flex-direction: column; gap: 10px; }
+  select, input[type="text"], input[type="email"], textarea {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    transition: border-color 0.2s;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238888aa' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; cursor: pointer; }
+  select:focus, input:focus, textarea:focus { border-color: var(--accent2); }
 
-      /* ===== Footer ===== */
-      footer {
-        text-align: center;
-        padding: 20px;
-        font-size: 0.95rem;
-        color: #575757;
-        background: #eef2f7;
-      }
+  /* Keywords */
+  .keyword-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; min-height: 32px; }
+  .keyword-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: var(--accent2-soft);
+    border: 1px solid #c0c8e8;
+    border-radius: 100px;
+    font-size: 12px;
+    color: var(--accent2);
+    font-weight: 500;
+  }
+  .keyword-tag .rm {
+    cursor: pointer;
+    color: #8890c8;
+    font-size: 14px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+  }
+  .keyword-tag .rm:hover { color: var(--accent); }
+  .keyword-input-row { display: flex; gap: 6px; }
+  .keyword-input-row input { flex: 1; }
+  .keyword-input-row button {
+    padding: 9px 12px;
+    background: var(--accent2);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  .keyword-input-row button:hover { background: #1e2d6b; }
 
-      /* ===== iPhone 작은 해상도 보완 ===== */
-      @media (max-width: 390px) { /* iPhone mini/SE 등 */
-        header p { font-size: 0.95rem; }
-        .nav-links { gap: 10px; }
-        .nav-links a { padding: 12px 16px; }
-      }
+  /* CONTENT */
+  .content-area { display: flex; flex-direction: column; gap: 1.5rem; }
 
-      /* 사용자가 모션 줄이기 설정 시 애니메이션 최소화 */
-      @media (prefers-reduced-motion: reduce) {
-        * { animation: none !important; transition: none !important; }
-      }
-    </style>
-  </head>
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 16px;
+    box-shadow: var(--shadow);
+  }
+  .toolbar-left { display: flex; align-items: center; gap: 12px; }
+  .region-badge {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .count-badge {
+    font-size: 12px;
+    padding: 3px 10px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: 100px;
+    font-weight: 500;
+    border: 1px solid #e8c4c0;
+  }
+  .sort-select { 
+    width: auto; 
+    padding: 6px 28px 6px 10px; 
+    font-size: 13px;
+  }
 
-  <body>
-    <header>
-      <h1>홍길동</h1>
-      <p>Frontend Developer | UI/UX Enthusiast</p>
-    </header>
+  /* NEWS LIST */
+  .news-list { display: flex; flex-direction: column; gap: 0; }
+  .news-item {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    padding: 18px 20px;
+    transition: background 0.15s;
+    cursor: pointer;
+    border-bottom: none;
+    position: relative;
+  }
+  .news-item:first-child { border-radius: 6px 6px 0 0; }
+  .news-item:last-child { border-bottom: 1px solid var(--border); border-radius: 0 0 6px 6px; }
+  .news-item:only-child { border-radius: 6px; border-bottom: 1px solid var(--border); }
+  .news-item:hover { background: var(--paper-warm); }
+  .news-item + .news-item { border-top: 1px solid var(--border); }
+  .news-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .news-source {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+  .news-date { font-size: 11px; color: var(--ink-light); }
+  .news-category {
+    font-size: 11px;
+    padding: 2px 8px;
+    background: var(--tag-bg);
+    border-radius: 3px;
+    color: var(--ink-mid);
+    border: 1px solid var(--border);
+  }
+  .news-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.45;
+    margin-bottom: 6px;
+  }
+  .news-summary {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.65;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .news-keywords { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 10px; }
+  .kw-match {
+    font-size: 11px;
+    padding: 2px 8px;
+    background: var(--accent2-soft);
+    color: var(--accent2);
+    border-radius: 100px;
+    border: 1px solid #c0c8e8;
+    font-weight: 500;
+  }
 
-    <section id="intro">
-      <h2>소개</h2>
-      <div class="intro">
-        <div class="profile">
-          <!-- 이미지: image 폴더의 JPG 파일 / iOS 성능을 위해 lazy/decoding 추가 -->
-          <img
-            src="./image/54296_39721_226.jpg"
-            alt="프로필 사진"
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
-        <div class="intro-text">
-          <p>
-            안녕하세요! 사용자 경험을 중심으로 한 웹 개발을 추구하는 프론트엔드
-            개발자입니다. React, Three.js, 그리고 인터랙티브한 웹 디자인에
-            관심이 많습니다.
-          </p>
+  /* LOADING */
+  .loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    gap: 1rem;
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    box-shadow: var(--shadow);
+  }
+  .spinner {
+    width: 32px; height: 32px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent2);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { font-size: 14px; color: var(--ink-light); }
+
+  /* EMPTY */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    gap: 0.75rem;
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .empty-icon { font-size: 40px; opacity: 0.4; }
+  .empty-title { font-family: 'Noto Serif KR', serif; font-size: 16px; font-weight: 600; }
+  .empty-desc { font-size: 13px; color: var(--ink-light); }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,26,46,0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--paper-card);
+    border-radius: 8px;
+    padding: 2rem;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(26,26,46,0.2);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px double var(--border);
+  }
+  .modal-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .modal-close {
+    cursor: pointer;
+    color: var(--ink-light);
+    font-size: 20px;
+    line-height: 1;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .modal-close:hover { color: var(--ink); }
+  .form-group { margin-bottom: 1.25rem; }
+  .form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--ink-mid);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .form-hint { font-size: 12px; color: var(--ink-light); margin-top: 4px; }
+  .checkbox-group { display: flex; flex-direction: column; gap: 8px; }
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .checkbox-item input[type="checkbox"] {
+    width: auto;
+    accent-color: var(--accent2);
+    cursor: pointer;
+  }
+  textarea { resize: vertical; min-height: 80px; }
+  .success-msg {
+    display: none;
+    background: var(--success-soft);
+    border: 1px solid #a8d4b8;
+    border-radius: 6px;
+    padding: 1rem;
+    color: var(--success);
+    font-size: 14px;
+    text-align: center;
+  }
+
+  /* ARTICLE MODAL */
+  .article-modal .modal { max-width: 700px; }
+  .article-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+  }
+  .article-meta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.25rem;
+    font-size: 12px;
+    color: var(--ink-light);
+  }
+  .article-source-tag {
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .article-body { font-size: 15px; line-height: 1.8; color: var(--ink-mid); }
+  .article-body p { margin-bottom: 1rem; }
+  .ai-analysis {
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+    background: var(--accent2-soft);
+    border: 1px solid #c0c8e8;
+    border-radius: 6px;
+    border-left: 3px solid var(--accent2);
+  }
+  .ai-analysis-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 8px;
+  }
+  .ai-analysis-body { font-size: 13px; color: var(--ink-mid); line-height: 1.7; }
+  .ai-spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid #c0c8e8; border-top-color: var(--accent2); border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 6px; }
+
+  /* NOTIFICATION BANNER */
+  .notice-bar {
+    background: var(--accent2);
+    color: white;
+    font-size: 13px;
+    text-align: center;
+    padding: 8px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    display: none;
+  }
+  .notice-bar.show { display: block; }
+
+  /* SHARE BAR */
+  .share-panel { background: var(--paper-card); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; box-shadow: var(--shadow); }
+  .share-inner { display: flex; align-items: center; gap: 10px; }
+  .share-label { font-size: 12px; font-weight: 700; letter-spacing: 0.5px; color: var(--ink-mid); text-transform: uppercase; white-space: nowrap; }
+  .share-url {
+    flex: 1;
+    font-size: 12px;
+    background: var(--paper-warm);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 7px 10px;
+    color: var(--ink-mid);
+    font-family: monospace;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .copy-btn {
+    padding: 7px 12px;
+    font-size: 12px;
+    background: var(--ink);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .copy-btn:hover { background: var(--ink-mid); }
+
+  .page-footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 12px;
+    color: var(--ink-light);
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="notice-bar" id="noticeBar">
+  ✓ 메일링이 성공적으로 등록되었습니다. 설정한 키워드의 뉴스를 정기적으로 받아보실 수 있습니다.
+</div>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="logo">
+      <div class="logo-title">🗞 지역뉴스허브</div>
+      <div class="logo-sub">Local News Intelligence</div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-outline" onclick="openMailModal()">📧 메일링 설정</button>
+      <button class="btn btn-primary" onclick="fetchNews()">🔍 뉴스 검색</button>
+    </div>
+  </div>
+</header>
+
+<div class="main-wrap">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <!-- Region select -->
+    <div class="panel">
+      <div class="panel-header">📍 지역 선택</div>
+      <div class="panel-body">
+        <div class="region-select-group">
+          <select id="doSelect" onchange="updateSiGun()">
+            <option value="">시·도 선택</option>
+            <option value="서울">서울특별시</option>
+            <option value="부산">부산광역시</option>
+            <option value="대구">대구광역시</option>
+            <option value="인천">인천광역시</option>
+            <option value="광주">광주광역시</option>
+            <option value="대전">대전광역시</option>
+            <option value="울산">울산광역시</option>
+            <option value="세종">세종특별자치시</option>
+            <option value="경기">경기도</option>
+            <option value="강원">강원도</option>
+            <option value="충북">충청북도</option>
+            <option value="충남">충청남도</option>
+            <option value="전북">전라북도</option>
+            <option value="전남">전라남도</option>
+            <option value="경북">경상북도</option>
+            <option value="경남">경상남도</option>
+            <option value="제주">제주특별자치도</option>
+          </select>
+          <select id="sigunSelect">
+            <option value="">시·군·구 선택</option>
+          </select>
+          <select id="periodSelect">
+            <option value="1">최근 1일</option>
+            <option value="3" selected>최근 3일</option>
+            <option value="7">최근 1주일</option>
+            <option value="30">최근 1개월</option>
+          </select>
         </div>
       </div>
-    </section>
+    </div>
 
-    <section id="skills">
-      <h2>기술 스택</h2>
-      <div class="skills" role="list">
-        <div class="skill-item" role="listitem">HTML / CSS / JS</div>
-        <div class="skill-item" role="listitem">React / Vue</div>
-        <div class="skill-item" role="listitem">Node.js</div>
-        <div class="skill-item" role="listitem">Three.js / WebGL</div>
-        <div class="skill-item" role="listitem">Git / GitHub</div>
+    <!-- Keywords -->
+    <div class="panel">
+      <div class="panel-header">
+        🔑 키워드 필터
+        <span style="font-size:11px;font-weight:400;letter-spacing:0;text-transform:none;color:var(--ink-light)">AND 조건</span>
       </div>
-    </section>
-
-    <section id="projects">
-      <h2>프로젝트</h2>
-      <div class="projects">
-        <article class="project">
-          <h3>포트폴리오 사이트</h3>
-          <p>
-            React와 GSAP을 활용한 개인 포트폴리오 페이지입니다. 애니메이션과
-            인터랙션을 통해 사용자 경험을 강화했습니다.
-          </p>
-        </article>
-        <article class="project">
-          <h3>3D 인터랙티브 웹</h3>
-          <p>
-            Three.js로 제작한 실시간 3D 오브젝트 뷰어. 사용자는 마우스로 모델을
-            회전·확대할 수 있습니다.
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <section id="contact" aria-labelledby="contact-heading">
-      <h2 id="contact-heading">연락처</h2>
-      <nav class="contact" aria-label="바로가기 링크">
-        <div class="nav-links">
-          <a href="mailto:example@email.com">📧 이메일</a>
-          <a href="https://github.com/yourname" target="_blank" rel="noopener noreferrer">💻 GitHub</a>
-          <a href="https://linkedin.com/in/yourname" target="_blank" rel="noopener noreferrer">🔗 LinkedIn</a>
+      <div class="panel-body">
+        <div class="keyword-list" id="keywordList"></div>
+        <div class="keyword-input-row">
+          <input type="text" id="kwInput" placeholder="키워드 입력" onkeydown="if(event.key==='Enter') addKeyword()">
+          <button onclick="addKeyword()">+ 추가</button>
         </div>
-      </nav>
-    </section>
+        <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:5px;">
+          <span style="font-size:11px;color:var(--ink-light);width:100%;margin-bottom:2px">빠른 추가:</span>
+          <button onclick="quickKw('예산')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid)">예산</button>
+          <button onclick="quickKw('개발')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid)">개발</button>
+          <button onclick="quickKw('복지')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid)">복지</button>
+          <button onclick="quickKw('교통')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid)">교통</button>
+          <button onclick="quickKw('환경')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid)">환경</button>
+          <button onclick="quickKw('부동산')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid)">부동산</button>
+          <button onclick="quickKw('안전')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid)">안전</button>
+          <button onclick="quickKw('의회')" style="font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:100px;background:var(--tag-bg);cursor:pointer;color:var(--ink-mid)">의회</button>
+        </div>
+      </div>
+    </div>
 
-    <footer>© 2025 홍길동. All rights reserved.</footer>
-  </body>
+    <!-- Sources -->
+    <div class="panel">
+      <div class="panel-header">📰 뉴스 출처 선택</div>
+      <div class="panel-body">
+        <div class="checkbox-group" id="sourceGroup">
+          <label class="checkbox-item"><input type="checkbox" value="네이버뉴스" checked> 네이버뉴스</label>
+          <label class="checkbox-item"><input type="checkbox" value="다음뉴스" checked> 다음뉴스</label>
+          <label class="checkbox-item"><input type="checkbox" value="연합뉴스" checked> 연합뉴스</label>
+          <label class="checkbox-item"><input type="checkbox" value="KBS"> KBS</label>
+          <label class="checkbox-item"><input type="checkbox" value="지역일보"> 지역일보</label>
+          <label class="checkbox-item"><input type="checkbox" value="뉴스1"> 뉴스1</label>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="content-area">
+    <!-- Share bar -->
+    <div class="share-panel">
+      <div class="share-inner">
+        <span class="share-label">🔗 공유 URL</span>
+        <div class="share-url" id="shareUrl">지역과 키워드를 설정하면 공유 URL이 생성됩니다</div>
+        <button class="copy-btn" onclick="copyUrl()">복사</button>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <span class="region-badge" id="regionBadge">지역을 선택하세요</span>
+        <span class="count-badge" id="countBadge" style="display:none"></span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <select class="sort-select" id="sortSelect" onchange="sortNews()" style="width:auto">
+          <option value="date">최신순</option>
+          <option value="relevance">관련도순</option>
+        </select>
+        <button class="btn btn-outline" onclick="fetchNews()" style="padding:7px 14px;font-size:13px">새로고침</button>
+      </div>
+    </div>
+
+    <!-- News list -->
+    <div id="newsList">
+      <div class="empty-state">
+        <div class="empty-icon">📍</div>
+        <div class="empty-title">지역과 키워드를 설정하세요</div>
+        <div class="empty-desc">좌측에서 시·군·구와 키워드를 선택한 뒤<br>뉴스 검색 버튼을 눌러주세요</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer class="page-footer">
+  지역뉴스허브 — AI 기반 지역 뉴스 모니터링 서비스 &nbsp;·&nbsp; Claude API 연동
+</footer>
+
+<!-- MAILING MODAL -->
+<div class="modal-overlay" id="mailModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">📧 메일링 구독 설정</span>
+      <button class="modal-close" onclick="closeMailModal()">✕</button>
+    </div>
+
+    <div id="mailForm">
+      <div class="form-group">
+        <label class="form-label">이메일 주소</label>
+        <input type="email" id="mailEmail" placeholder="your@email.com">
+        <div class="form-hint">수신할 이메일 주소를 입력하세요</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">수신 주기</label>
+        <select id="mailFreq">
+          <option value="daily">매일 오전 9시</option>
+          <option value="twice">하루 2회 (오전 9시, 오후 6시)</option>
+          <option value="weekly">매주 월요일</option>
+          <option value="realtime">실시간 알림 (키워드 매칭 시)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">포함할 지역</label>
+        <div id="mailRegionInfo" style="font-size:13px;padding:10px;background:var(--paper-warm);border-radius:4px;border:1px solid var(--border);color:var(--ink-mid)">
+          현재 선택된 지역이 자동으로 적용됩니다
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">모니터링 키워드</label>
+        <div id="mailKeywordInfo" style="font-size:13px;padding:10px;background:var(--paper-warm);border-radius:4px;border:1px solid var(--border);color:var(--ink-mid)">
+          현재 설정된 키워드가 자동으로 적용됩니다
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">메일 형식</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item"><input type="checkbox" id="opt_summary" checked> AI 요약 포함</label>
+          <label class="checkbox-item"><input type="checkbox" id="opt_link" checked> 원문 링크 포함</label>
+          <label class="checkbox-item"><input type="checkbox" id="opt_analysis"> 키워드 트렌드 분석</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">추가 수신자 (선택)</label>
+        <textarea id="mailExtra" placeholder="다른 수신자 이메일을 줄바꿈으로 입력 (팀 공유용)"></textarea>
+        <div class="form-hint">팀원들과 함께 구독할 수 있습니다</div>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:0.5rem">
+        <button class="btn btn-outline" onclick="closeMailModal()">취소</button>
+        <button class="btn btn-primary" onclick="submitMail()">구독 신청</button>
+      </div>
+    </div>
+
+    <div class="success-msg" id="mailSuccess">
+      ✅ 구독이 완료되었습니다!<br>
+      <span style="font-size:12px;opacity:0.8">입력하신 이메일로 확인 메일이 발송됩니다</span>
+    </div>
+  </div>
+</div>
+
+<!-- ARTICLE MODAL -->
+<div class="modal-overlay article-modal" id="articleModal">
+  <div class="modal" style="max-width:700px">
+    <div class="modal-header">
+      <span style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ink-light)">기사 상세</span>
+      <button class="modal-close" onclick="closeArticleModal()">✕</button>
+    </div>
+    <div id="articleContent"></div>
+  </div>
+</div>
+
+<script>
+// ===== DATA =====
+const SIGUN_DATA = {
+  '서울': ['종로구','중구','용산구','성동구','광진구','동대문구','중랑구','성북구','강북구','도봉구','노원구','은평구','서대문구','마포구','양천구','강서구','구로구','금천구','영등포구','동작구','관악구','서초구','강남구','송파구','강동구'],
+  '부산': ['중구','서구','동구','영도구','부산진구','동래구','남구','북구','해운대구','사하구','금정구','강서구','연제구','수영구','사상구','기장군'],
+  '경기': ['수원시','성남시','의정부시','안양시','부천시','광명시','평택시','동두천시','안산시','고양시','과천시','구리시','남양주시','오산시','시흥시','군포시','의왕시','하남시','용인시','파주시','이천시','안성시','김포시','화성시','광주시','양주시','포천시','여주시','연천군','가평군','양평군'],
+  '강원': ['춘천시','원주시','강릉시','동해시','태백시','속초시','삼척시','홍천군','횡성군','영월군','평창군','정선군','철원군','화천군','양구군','인제군','고성군','양양군'],
+  '충북': ['청주시','충주시','제천시','보은군','옥천군','영동군','증평군','진천군','괴산군','음성군','단양군'],
+  '충남': ['천안시','공주시','보령시','아산시','서산시','논산시','계룡시','당진시','금산군','부여군','서천군','청양군','홍성군','예산군','태안군'],
+  '전북': ['전주시','군산시','익산시','정읍시','남원시','김제시','완주군','진안군','무주군','장수군','임실군','순창군','고창군','부안군'],
+  '전남': ['목포시','여수시','순천시','나주시','광양시','담양군','곡성군','구례군','고흥군','보성군','화순군','장흥군','강진군','해남군','영암군','무안군','함평군','영광군','장성군','완도군','진도군','신안군'],
+  '경북': ['포항시','경주시','김천시','안동시','구미시','영주시','영천시','상주시','문경시','경산시','군위군','의성군','청송군','영양군','영덕군','청도군','고령군','성주군','칠곡군','예천군','봉화군','울진군','울릉군'],
+  '경남': ['창원시','진주시','통영시','사천시','김해시','밀양시','거제시','양산시','의령군','함안군','창녕군','고성군','남해군','하동군','산청군','함양군','거창군','합천군'],
+  '제주': ['제주시','서귀포시'],
+  '인천': ['중구','동구','미추홀구','연수구','남동구','부평구','계양구','서구','강화군','옹진군'],
+  '대구': ['중구','동구','서구','남구','북구','수성구','달서구','달성군'],
+  '광주': ['동구','서구','남구','북구','광산구'],
+  '대전': ['동구','중구','서구','유성구','대덕구'],
+  '울산': ['중구','남구','동구','북구','울주군'],
+  '세종': ['세종시']
+};
+
+let keywords = [];
+let newsData = [];
+let currentArticle = null;
+
+// ===== REGION =====
+function updateSiGun() {
+  const do_ = document.getElementById('doSelect').value;
+  const sg = document.getElementById('sigunSelect');
+  sg.innerHTML = '<option value="">시·군·구 선택</option>';
+  if (do_ && SIGUN_DATA[do_]) {
+    SIGUN_DATA[do_].forEach(s => {
+      const o = document.createElement('option');
+      o.value = s; o.textContent = s; sg.appendChild(o);
+    });
+  }
+  updateShareUrl();
+}
+
+// ===== KEYWORDS =====
+function addKeyword() {
+  const inp = document.getElementById('kwInput');
+  const val = inp.value.trim();
+  if (!val || keywords.includes(val)) { inp.value = ''; return; }
+  keywords.push(val);
+  inp.value = '';
+  renderKeywords();
+  updateShareUrl();
+}
+function quickKw(kw) { if (!keywords.includes(kw)) { keywords.push(kw); renderKeywords(); updateShareUrl(); } }
+function removeKeyword(kw) { keywords = keywords.filter(k => k !== kw); renderKeywords(); updateShareUrl(); }
+function renderKeywords() {
+  const list = document.getElementById('keywordList');
+  list.innerHTML = keywords.map(k =>
+    `<span class="keyword-tag">${k}<span class="rm" onclick="removeKeyword('${k}')">×</span></span>`
+  ).join('') || '<span style="font-size:12px;color:var(--ink-light)">키워드를 추가하세요</span>';
+}
+
+// ===== SHARE URL =====
+function updateShareUrl() {
+  const do_ = document.getElementById('doSelect').value;
+  const sg = document.getElementById('sigunSelect').value;
+  if (!do_ || !sg) { document.getElementById('shareUrl').textContent = '지역과 키워드를 설정하면 공유 URL이 생성됩니다'; return; }
+  const params = new URLSearchParams();
+  params.set('do', do_);
+  params.set('sg', sg);
+  if (keywords.length) params.set('kw', keywords.join(','));
+  params.set('period', document.getElementById('periodSelect').value);
+  const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+  document.getElementById('shareUrl').textContent = url;
+}
+function copyUrl() {
+  const txt = document.getElementById('shareUrl').textContent;
+  navigator.clipboard.writeText(txt).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✓ 복사됨';
+    setTimeout(() => btn.textContent = '복사', 1500);
+  });
+}
+
+// ===== INIT FROM URL =====
+function loadFromUrl() {
+  const p = new URLSearchParams(window.location.search);
+  if (p.get('do')) {
+    document.getElementById('doSelect').value = p.get('do');
+    updateSiGun();
+    setTimeout(() => {
+      if (p.get('sg')) document.getElementById('sigunSelect').value = p.get('sg');
+      if (p.get('period')) document.getElementById('periodSelect').value = p.get('period');
+      if (p.get('kw')) { keywords = p.get('kw').split(',').filter(Boolean); renderKeywords(); }
+      updateShareUrl();
+      fetchNews();
+    }, 100);
+  }
+}
+
+// ===== NEWS FETCH (Claude API) =====
+async function fetchNews() {
+  const do_ = document.getElementById('doSelect').value;
+  const sg = document.getElementById('sigunSelect').value;
+  if (!do_) { alert('시·도를 선택해주세요'); return; }
+  if (!sg) { alert('시·군·구를 선택해주세요'); return; }
+  
+  const region = `${do_} ${sg}`;
+  const period = document.getElementById('periodSelect').value;
+  const checkedSrcs = [...document.querySelectorAll('#sourceGroup input:checked')].map(i => i.value);
+  
+  document.getElementById('regionBadge').textContent = region;
+  document.getElementById('countBadge').style.display = 'none';
+  updateShareUrl();
+
+  const list = document.getElementById('newsList');
+  list.innerHTML = `<div class="loading-state"><div class="spinner"></div><div class="loading-text">AI가 ${region} 뉴스를 수집하고 있습니다…</div></div>`;
+
+  const kwStr = keywords.length ? `키워드: ${keywords.join(', ')}` : '키워드 없음 (전체)';
+  const prompt = `당신은 지역 뉴스 데이터 생성 AI입니다. ${region} 지역의 최근 ${period}일 인터넷 뉴스 기사 10개를 JSON 배열로 생성하세요.
+${kwStr}
+
+출처 목록: ${checkedSrcs.join(', ')}
+
+각 기사는 다음 필드를 포함하세요:
+- id: 고유 번호 (1~10)
+- title: 기사 제목 (한국어, 실제 지역 뉴스 스타일)
+- summary: 기사 요약 2-3문장
+- source: 출처 (제공된 출처 중 하나)
+- date: 날짜 (오늘로부터 ${period}일 이내, YYYY-MM-DD 형식)
+- category: 카테고리 (정치/경제/사회/교통/환경/복지/문화 중 하나)
+- keywords: 이 기사와 관련된 키워드 배열 (${keywords.length ? keywords.join(', ') + ' 중 해당하는 것들' : '기사 관련 주요 단어 2-3개'})
+- url: 가상의 기사 URL
+- body: 기사 본문 3-4문단 (각 문단은 3-4문장)
+
+실제 해당 지역에서 일어날 법한 구체적이고 현실적인 뉴스를 생성하세요. ${keywords.length ? '키워드를 최대한 반영한 기사를 우선 포함하세요.' : ''}
+
+반드시 JSON 배열만 반환하고, 다른 텍스트나 마크다운은 포함하지 마세요.`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 4000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content.map(i => i.text || '').join('');
+    const clean = text.replace(/```json|```/g, '').trim();
+    newsData = JSON.parse(clean);
+    
+    // Filter by keywords if any
+    let filtered = newsData;
+    if (keywords.length) {
+      filtered = newsData.filter(n => {
+        const txt = (n.title + n.summary + n.body + (n.keywords || []).join(' ')).toLowerCase();
+        return keywords.some(k => txt.includes(k.toLowerCase()));
+      });
+    }
+    
+    renderNews(filtered);
+  } catch (e) {
+    console.error(e);
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">뉴스 로딩 실패</div><div class="empty-desc">${e.message}</div></div>`;
+  }
+}
+
+function renderNews(items) {
+  const list = document.getElementById('newsList');
+  const badge = document.getElementById('countBadge');
+  
+  if (!items.length) {
+    badge.style.display = 'none';
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-title">검색 결과 없음</div><div class="empty-desc">키워드를 변경하거나 기간을 늘려보세요</div></div>`;
+    return;
+  }
+  
+  badge.textContent = `${items.length}건`;
+  badge.style.display = 'inline-flex';
+  
+  const today = new Date();
+  list.innerHTML = `<div class="news-list">${items.map((n,i) => {
+    const d = new Date(n.date);
+    const diff = Math.floor((today - d) / 86400000);
+    const dateStr = diff === 0 ? '오늘' : diff === 1 ? '어제' : `${diff}일 전`;
+    const kwTags = (n.keywords || []).filter(k => keywords.includes(k)).map(k => `<span class="kw-match">#${k}</span>`).join('');
+    return `<div class="news-item" onclick="openArticle(${i})" style="animation:fadeIn 0.3s ease ${i*0.05}s both">
+      <div class="news-meta">
+        <span class="news-source">${n.source}</span>
+        <span class="news-date">${dateStr}</span>
+        <span class="news-category">${n.category}</span>
+      </div>
+      <div class="news-title">${n.title}</div>
+      <div class="news-summary">${n.summary}</div>
+      ${kwTags ? `<div class="news-keywords">${kwTags}</div>` : ''}
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function sortNews() {
+  const sort = document.getElementById('sortSelect').value;
+  if (!newsData.length) return;
+  let items = [...newsData];
+  if (keywords.length) items = items.filter(n => {
+    const txt = (n.title + n.summary + (n.keywords||[]).join(' ')).toLowerCase();
+    return keywords.some(k => txt.includes(k.toLowerCase()));
+  });
+  if (sort === 'date') items.sort((a,b) => new Date(b.date) - new Date(a.date));
+  else items.sort((a,b) => { // relevance: count keyword matches
+    const sc = n => keywords.filter(k => (n.title+n.summary).toLowerCase().includes(k.toLowerCase())).length;
+    return sc(b) - sc(a);
+  });
+  renderNews(items);
+}
+
+// ===== ARTICLE MODAL =====
+function openArticle(idx) {
+  currentArticle = newsData[idx];
+  const n = currentArticle;
+  const content = document.getElementById('articleContent');
+  content.innerHTML = `
+    <div class="article-title">${n.title}</div>
+    <div class="article-meta">
+      <span class="article-source-tag">${n.source}</span>
+      <span>${n.date}</span>
+      <span>${n.category}</span>
+    </div>
+    <div class="article-body">${(n.body||'').split('\n').filter(Boolean).map(p => `<p>${p}</p>`).join('')}</div>
+    <div class="ai-analysis" id="aiAnalysis">
+      <div class="ai-analysis-title">🤖 AI 분석</div>
+      <div class="ai-analysis-body"><span class="ai-spinner"></span>분석 중…</div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border)">
+      <a href="${n.url||'#'}" class="btn btn-outline" style="font-size:13px" target="_blank">원문 보기 ↗</a>
+      <button class="btn btn-blue" onclick="shareArticle()" style="font-size:13px">공유하기</button>
+    </div>`;
+  document.getElementById('articleModal').classList.add('open');
+  analyzeArticle(n);
+}
+
+async function analyzeArticle(n) {
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 400,
+        messages: [{ role: 'user', content: `다음 지역 뉴스 기사를 3문장으로 핵심 요약하고, 지역 주민에게 미치는 영향을 1문장으로 분석하세요:\n\n제목: ${n.title}\n${n.summary}` }]
+      })
+    });
+    const data = await res.json();
+    const analysis = data.content.map(i => i.text||'').join('');
+    document.querySelector('#aiAnalysis .ai-analysis-body').textContent = analysis;
+  } catch(e) {
+    document.querySelector('#aiAnalysis .ai-analysis-body').textContent = '분석을 불러올 수 없습니다.';
+  }
+}
+
+function closeArticleModal() { document.getElementById('articleModal').classList.remove('open'); }
+
+// ===== MAIL MODAL =====
+function openMailModal() {
+  const do_ = document.getElementById('doSelect').value;
+  const sg = document.getElementById('sigunSelect').value;
+  document.getElementById('mailRegionInfo').textContent = do_ && sg ? `${do_} ${sg}` : '(지역을 먼저 선택하세요)';
+  document.getElementById('mailKeywordInfo').textContent = keywords.length ? keywords.join(', ') : '(전체 뉴스)';
+  document.getElementById('mailModal').classList.add('open');
+  document.getElementById('mailSuccess').style.display = 'none';
+  document.getElementById('mailForm').style.display = 'block';
+}
+function closeMailModal() { document.getElementById('mailModal').classList.remove('open'); }
+
+async function submitMail() {
+  const email = document.getElementById('mailEmail').value.trim();
+  if (!email || !email.includes('@')) { alert('올바른 이메일 주소를 입력하세요'); return; }
+  
+  // Simulate success
+  document.getElementById('mailForm').style.display = 'none';
+  document.getElementById('mailSuccess').style.display = 'block';
+  
+  setTimeout(() => {
+    closeMailModal();
+    const bar = document.getElementById('noticeBar');
+    bar.classList.add('show');
+    setTimeout(() => bar.classList.remove('show'), 4000);
+  }, 2000);
+}
+
+function shareArticle() {
+  if (!currentArticle) return;
+  const text = `[지역뉴스허브] ${currentArticle.title}`;
+  navigator.clipboard.writeText(text);
+  alert('기사 제목이 복사되었습니다!');
+}
+
+// ===== STYLE =====
+const style = document.createElement('style');
+style.textContent = `@keyframes fadeIn { from { opacity:0; transform:translateY(6px) } to { opacity:1; transform:none } }`;
+document.head.appendChild(style);
+
+// ===== INIT =====
+renderKeywords();
+loadFromUrl();
+document.getElementById('sigunSelect').addEventListener('change', updateShareUrl);
+document.getElementById('periodSelect').addEventListener('change', updateShareUrl);
+</script>
+</body>
 </html>
